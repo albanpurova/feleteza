@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme {
+  /* Paleta e markës FLETËZA */
+  --color-brand-green: #1f9d63;
+  --color-brand-green-dark: #178050;
+  --color-brand-orange: #f0892a;
+  --color-brand-orange-dark: #d9761c;
+  --color-brand-navy: #34495e;
+  --color-brand-navy-light: #51677d;
+  --color-brand-cream: #fcf5ea;
+  --color-brand-cream-dark: #faeeda;
+  --color-brand-teal: #46a99b;
+  --color-brand-teal-dark: #3a9183;
+  --color-brand-red: #e8645a;
+  --color-brand-yellow: #f5c73e;
+  --color-brand-gray: #6b7280;
+
+  --font-display: var(--font-baloo), "Baloo 2", system-ui, sans-serif;
+  --font-sans: var(--font-nunito), "Nunito", system-ui, sans-serif;
+
+  --radius-card: 18px;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-brand-navy);
+  background: #ffffff;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display);
+}
+
+/* Utility components */
+.btn-primary {
+  @apply inline-flex items-center justify-center rounded-full bg-brand-orange px-7 py-3 text-sm font-bold text-white transition hover:bg-brand-orange-dark disabled:opacity-50;
+}
+.btn-teal {
+  @apply inline-flex items-center justify-center rounded-xl bg-brand-teal px-7 py-3 text-sm font-bold text-white transition hover:bg-brand-teal-dark disabled:opacity-50;
+}
+.btn-outline {
+  @apply inline-flex items-center justify-center rounded-full border border-brand-orange px-6 py-3 text-sm font-bold text-brand-orange transition hover:bg-brand-orange hover:text-white;
+}
+.input-field {
+  @apply w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm text-brand-navy outline-none transition focus:border-brand-green focus:ring-2 focus:ring-brand-green/20;
+}
+.container-x {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+
+/* Animacioni i butterfly/bee */
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.animate-floaty { animation: floaty 4s ease-in-out infinite; }
