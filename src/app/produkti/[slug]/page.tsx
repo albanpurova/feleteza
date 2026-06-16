@@ -174,7 +174,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             {related.map((p) => (
               <ProductCard
                 key={p.id}
-                p={{ slug: p.slug, name: p.name, price: p.price.toString(), image: p.images[0]?.url ?? null }}
+                p={{ productId: p.id, slug: p.slug, name: p.name, price: p.price.toString(), image: p.images[0]?.url ?? null, freeShipping: p.freeShipping }}
               />
             ))}
           </div>
