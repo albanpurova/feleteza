@@ -15,6 +15,7 @@ export type CartItem = {
   name: string;
   price: number;
   image?: string;
+  freeShipping?: boolean;
   quantity: number;
 };
 

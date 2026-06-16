@@ -3,6 +3,7 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { sendOrderEmails } from "@/lib/mail";
 import { genOrderNumber } from "@/lib/format";
+import { calcShipping } from "@/lib/shipping";
 
 const schema = z.object({
   customer: z.object({
@@ -63,7 +64,11 @@ export async function POST(req: NextRequest) {
   }
 
   const subtotal = lineItems.reduce((s, li) => s + li.price * li.quantity, 0);
-  const shipping = 0; // transporti i përfshirë (mund të konfigurohet)
+  // Transporti llogaritet në server sipas shtetit + produkteve (autoritativ)
+  const shipping = calcShipping(
+    customer.country,
+    lineItems.map((li) => ({ freeShipping: li.product.freeShipping }))
+  );
   const total = subtotal + shipping;
   const orderNumber = genOrderNumber();
 

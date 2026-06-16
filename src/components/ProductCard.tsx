@@ -19,7 +19,7 @@ export default function ProductCard({ p }: { p: ProductCardData }) {
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={p.image}
-            alt={p.name}
+            alt=""
             className="h-full w-full object-cover transition group-hover:scale-105"
           />
         ) : (

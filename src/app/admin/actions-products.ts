@@ -61,6 +61,7 @@ export async function saveProduct(formData: FormData) {
     sku: str(formData, "sku") || null,
     active: bool(formData, "active"),
     featured: bool(formData, "featured"),
+    freeShipping: bool(formData, "freeShipping"),
     sortOrder: int(formData, "sortOrder"),
     ageRange: str(formData, "ageRange") || null,
   };

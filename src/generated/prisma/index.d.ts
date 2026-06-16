@@ -3513,6 +3513,7 @@ export namespace Prisma {
     sku: string | null
     active: boolean | null
     featured: boolean | null
+    freeShipping: boolean | null
     sortOrder: number | null
     ageRange: string | null
     createdAt: Date | null
@@ -3532,6 +3533,7 @@ export namespace Prisma {
     sku: string | null
     active: boolean | null
     featured: boolean | null
+    freeShipping: boolean | null
     sortOrder: number | null
     ageRange: string | null
     createdAt: Date | null
@@ -3551,6 +3553,7 @@ export namespace Prisma {
     sku: number
     active: number
     featured: number
+    freeShipping: number
     sortOrder: number
     ageRange: number
     createdAt: number
@@ -3586,6 +3589,7 @@ export namespace Prisma {
     sku?: true
     active?: true
     featured?: true
+    freeShipping?: true
     sortOrder?: true
     ageRange?: true
     createdAt?: true
@@ -3605,6 +3609,7 @@ export namespace Prisma {
     sku?: true
     active?: true
     featured?: true
+    freeShipping?: true
     sortOrder?: true
     ageRange?: true
     createdAt?: true
@@ -3624,6 +3629,7 @@ export namespace Prisma {
     sku?: true
     active?: true
     featured?: true
+    freeShipping?: true
     sortOrder?: true
     ageRange?: true
     createdAt?: true
@@ -3730,6 +3736,7 @@ export namespace Prisma {
     sku: string | null
     active: boolean
     featured: boolean
+    freeShipping: boolean
     sortOrder: number
     ageRange: string | null
     createdAt: Date
@@ -3768,6 +3775,7 @@ export namespace Prisma {
     sku?: boolean
     active?: boolean
     featured?: boolean
+    freeShipping?: boolean
     sortOrder?: boolean
     ageRange?: boolean
     createdAt?: boolean
@@ -3794,6 +3802,7 @@ export namespace Prisma {
     sku?: boolean
     active?: boolean
     featured?: boolean
+    freeShipping?: boolean
     sortOrder?: boolean
     ageRange?: boolean
     createdAt?: boolean
@@ -3813,6 +3822,7 @@ export namespace Prisma {
     sku?: boolean
     active?: boolean
     featured?: boolean
+    freeShipping?: boolean
     sortOrder?: boolean
     ageRange?: boolean
     createdAt?: boolean
@@ -3832,13 +3842,14 @@ export namespace Prisma {
     sku?: boolean
     active?: boolean
     featured?: boolean
+    freeShipping?: boolean
     sortOrder?: boolean
     ageRange?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "name" | "shortDesc" | "price" | "compareAtPrice" | "shippingNote" | "description" | "stock" | "sku" | "active" | "featured" | "sortOrder" | "ageRange" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "name" | "shortDesc" | "price" | "compareAtPrice" | "shippingNote" | "description" | "stock" | "sku" | "active" | "featured" | "freeShipping" | "sortOrder" | "ageRange" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
   export type ProductInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     images?: boolean | Product$imagesArgs<ExtArgs>
     bullets?: boolean | Product$bulletsArgs<ExtArgs>
@@ -3874,6 +3885,7 @@ export namespace Prisma {
       sku: string | null
       active: boolean
       featured: boolean
+      freeShipping: boolean
       sortOrder: number
       ageRange: string | null
       createdAt: Date
@@ -4319,6 +4331,7 @@ export namespace Prisma {
     readonly sku: FieldRef<"Product", 'String'>
     readonly active: FieldRef<"Product", 'Boolean'>
     readonly featured: FieldRef<"Product", 'Boolean'>
+    readonly freeShipping: FieldRef<"Product", 'Boolean'>
     readonly sortOrder: FieldRef<"Product", 'Int'>
     readonly ageRange: FieldRef<"Product", 'String'>
     readonly createdAt: FieldRef<"Product", 'DateTime'>
@@ -21030,6 +21043,7 @@ export namespace Prisma {
     sku: 'sku',
     active: 'active',
     featured: 'featured',
+    freeShipping: 'freeShipping',
     sortOrder: 'sortOrder',
     ageRange: 'ageRange',
     createdAt: 'createdAt',
@@ -21421,6 +21435,7 @@ export namespace Prisma {
     sku?: StringNullableFilter<"Product"> | string | null
     active?: BoolFilter<"Product"> | boolean
     featured?: BoolFilter<"Product"> | boolean
+    freeShipping?: BoolFilter<"Product"> | boolean
     sortOrder?: IntFilter<"Product"> | number
     ageRange?: StringNullableFilter<"Product"> | string | null
     createdAt?: DateTimeFilter<"Product"> | Date | string
@@ -21446,6 +21461,7 @@ export namespace Prisma {
     sku?: SortOrderInput | SortOrder
     active?: SortOrder
     featured?: SortOrder
+    freeShipping?: SortOrder
     sortOrder?: SortOrder
     ageRange?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -21474,6 +21490,7 @@ export namespace Prisma {
     sku?: StringNullableFilter<"Product"> | string | null
     active?: BoolFilter<"Product"> | boolean
     featured?: BoolFilter<"Product"> | boolean
+    freeShipping?: BoolFilter<"Product"> | boolean
     sortOrder?: IntFilter<"Product"> | number
     ageRange?: StringNullableFilter<"Product"> | string | null
     createdAt?: DateTimeFilter<"Product"> | Date | string
@@ -21499,6 +21516,7 @@ export namespace Prisma {
     sku?: SortOrderInput | SortOrder
     active?: SortOrder
     featured?: SortOrder
+    freeShipping?: SortOrder
     sortOrder?: SortOrder
     ageRange?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -21526,6 +21544,7 @@ export namespace Prisma {
     sku?: StringNullableWithAggregatesFilter<"Product"> | string | null
     active?: BoolWithAggregatesFilter<"Product"> | boolean
     featured?: BoolWithAggregatesFilter<"Product"> | boolean
+    freeShipping?: BoolWithAggregatesFilter<"Product"> | boolean
     sortOrder?: IntWithAggregatesFilter<"Product"> | number
     ageRange?: StringNullableWithAggregatesFilter<"Product"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Product"> | Date | string
@@ -22523,6 +22542,7 @@ export namespace Prisma {
     sku?: string | null
     active?: boolean
     featured?: boolean
+    freeShipping?: boolean
     sortOrder?: number
     ageRange?: string | null
     createdAt?: Date | string
@@ -22548,6 +22568,7 @@ export namespace Prisma {
     sku?: string | null
     active?: boolean
     featured?: boolean
+    freeShipping?: boolean
     sortOrder?: number
     ageRange?: string | null
     createdAt?: Date | string
@@ -22573,6 +22594,7 @@ export namespace Prisma {
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
     featured?: BoolFieldUpdateOperationsInput | boolean
+    freeShipping?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     ageRange?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22598,6 +22620,7 @@ export namespace Prisma {
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
     featured?: BoolFieldUpdateOperationsInput | boolean
+    freeShipping?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     ageRange?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22623,6 +22646,7 @@ export namespace Prisma {
     sku?: string | null
     active?: boolean
     featured?: boolean
+    freeShipping?: boolean
     sortOrder?: number
     ageRange?: string | null
     createdAt?: Date | string
@@ -22642,6 +22666,7 @@ export namespace Prisma {
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
     featured?: BoolFieldUpdateOperationsInput | boolean
+    freeShipping?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     ageRange?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22661,6 +22686,7 @@ export namespace Prisma {
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
     featured?: BoolFieldUpdateOperationsInput | boolean
+    freeShipping?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     ageRange?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23853,6 +23879,7 @@ export namespace Prisma {
     sku?: SortOrder
     active?: SortOrder
     featured?: SortOrder
+    freeShipping?: SortOrder
     sortOrder?: SortOrder
     ageRange?: SortOrder
     createdAt?: SortOrder
@@ -23879,6 +23906,7 @@ export namespace Prisma {
     sku?: SortOrder
     active?: SortOrder
     featured?: SortOrder
+    freeShipping?: SortOrder
     sortOrder?: SortOrder
     ageRange?: SortOrder
     createdAt?: SortOrder
@@ -23898,6 +23926,7 @@ export namespace Prisma {
     sku?: SortOrder
     active?: SortOrder
     featured?: SortOrder
+    freeShipping?: SortOrder
     sortOrder?: SortOrder
     ageRange?: SortOrder
     createdAt?: SortOrder
@@ -25494,6 +25523,7 @@ export namespace Prisma {
     sku?: string | null
     active?: boolean
     featured?: boolean
+    freeShipping?: boolean
     sortOrder?: number
     ageRange?: string | null
     createdAt?: Date | string
@@ -25518,6 +25548,7 @@ export namespace Prisma {
     sku?: string | null
     active?: boolean
     featured?: boolean
+    freeShipping?: boolean
     sortOrder?: number
     ageRange?: string | null
     createdAt?: Date | string
@@ -25558,6 +25589,7 @@ export namespace Prisma {
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
     featured?: BoolFieldUpdateOperationsInput | boolean
+    freeShipping?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     ageRange?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25582,6 +25614,7 @@ export namespace Prisma {
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
     featured?: BoolFieldUpdateOperationsInput | boolean
+    freeShipping?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     ageRange?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25606,6 +25639,7 @@ export namespace Prisma {
     sku?: string | null
     active?: boolean
     featured?: boolean
+    freeShipping?: boolean
     sortOrder?: number
     ageRange?: string | null
     createdAt?: Date | string
@@ -25630,6 +25664,7 @@ export namespace Prisma {
     sku?: string | null
     active?: boolean
     featured?: boolean
+    freeShipping?: boolean
     sortOrder?: number
     ageRange?: string | null
     createdAt?: Date | string
@@ -25670,6 +25705,7 @@ export namespace Prisma {
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
     featured?: BoolFieldUpdateOperationsInput | boolean
+    freeShipping?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     ageRange?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25694,6 +25730,7 @@ export namespace Prisma {
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
     featured?: BoolFieldUpdateOperationsInput | boolean
+    freeShipping?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     ageRange?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25718,6 +25755,7 @@ export namespace Prisma {
     sku?: string | null
     active?: boolean
     featured?: boolean
+    freeShipping?: boolean
     sortOrder?: number
     ageRange?: string | null
     createdAt?: Date | string
@@ -25742,6 +25780,7 @@ export namespace Prisma {
     sku?: string | null
     active?: boolean
     featured?: boolean
+    freeShipping?: boolean
     sortOrder?: number
     ageRange?: string | null
     createdAt?: Date | string
@@ -25782,6 +25821,7 @@ export namespace Prisma {
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
     featured?: BoolFieldUpdateOperationsInput | boolean
+    freeShipping?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     ageRange?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25806,6 +25846,7 @@ export namespace Prisma {
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
     featured?: BoolFieldUpdateOperationsInput | boolean
+    freeShipping?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     ageRange?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25830,6 +25871,7 @@ export namespace Prisma {
     sku?: string | null
     active?: boolean
     featured?: boolean
+    freeShipping?: boolean
     sortOrder?: number
     ageRange?: string | null
     createdAt?: Date | string
@@ -25854,6 +25896,7 @@ export namespace Prisma {
     sku?: string | null
     active?: boolean
     featured?: boolean
+    freeShipping?: boolean
     sortOrder?: number
     ageRange?: string | null
     createdAt?: Date | string
@@ -25894,6 +25937,7 @@ export namespace Prisma {
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
     featured?: BoolFieldUpdateOperationsInput | boolean
+    freeShipping?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     ageRange?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25918,6 +25962,7 @@ export namespace Prisma {
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
     featured?: BoolFieldUpdateOperationsInput | boolean
+    freeShipping?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     ageRange?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25942,6 +25987,7 @@ export namespace Prisma {
     sku?: string | null
     active?: boolean
     featured?: boolean
+    freeShipping?: boolean
     sortOrder?: number
     ageRange?: string | null
     createdAt?: Date | string
@@ -25966,6 +26012,7 @@ export namespace Prisma {
     sku?: string | null
     active?: boolean
     featured?: boolean
+    freeShipping?: boolean
     sortOrder?: number
     ageRange?: string | null
     createdAt?: Date | string
@@ -26006,6 +26053,7 @@ export namespace Prisma {
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
     featured?: BoolFieldUpdateOperationsInput | boolean
+    freeShipping?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     ageRange?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -26030,6 +26078,7 @@ export namespace Prisma {
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
     featured?: BoolFieldUpdateOperationsInput | boolean
+    freeShipping?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     ageRange?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -26141,6 +26190,7 @@ export namespace Prisma {
     sku?: string | null
     active?: boolean
     featured?: boolean
+    freeShipping?: boolean
     sortOrder?: number
     ageRange?: string | null
     createdAt?: Date | string
@@ -26165,6 +26215,7 @@ export namespace Prisma {
     sku?: string | null
     active?: boolean
     featured?: boolean
+    freeShipping?: boolean
     sortOrder?: number
     ageRange?: string | null
     createdAt?: Date | string
@@ -26256,6 +26307,7 @@ export namespace Prisma {
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
     featured?: BoolFieldUpdateOperationsInput | boolean
+    freeShipping?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     ageRange?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -26280,6 +26332,7 @@ export namespace Prisma {
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
     featured?: BoolFieldUpdateOperationsInput | boolean
+    freeShipping?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     ageRange?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

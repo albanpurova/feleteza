@@ -41,6 +41,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 name: product.name,
                 price: parseFloat(product.price.toString()),
                 image: product.images[0]?.url ?? null,
+                freeShipping: product.freeShipping,
               }}
             />
           </div>

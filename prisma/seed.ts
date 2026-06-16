@@ -41,6 +41,7 @@ async function main() {
       sku: "FL-KARTAT",
       active: true,
       featured: true,
+      freeShipping: true,
       sortOrder: 1,
       description: `Ndihmoni fëmijën tuaj të mësojë dhe të zbulojë botën përmes kartave edukative Fletëza. Të krijuara nga ekspertë të zhvillimit të hershëm, kartat ndihmojnë në stimulimin e gjuhës, komunikimit dhe zhvillimit kognitiv në fazat më të rëndësishme të fëmijërisë.
 

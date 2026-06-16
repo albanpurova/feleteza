@@ -11,6 +11,7 @@ type Props = {
     name: string;
     price: number;
     image: string | null;
+    freeShipping?: boolean;
   };
 };
 
@@ -25,6 +26,7 @@ export default function AddToCartControls({ product }: Props) {
     name: product.name,
     price: product.price,
     image: product.image || undefined,
+    freeShipping: product.freeShipping ?? false,
   };
 
   return (

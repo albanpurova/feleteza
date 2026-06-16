@@ -40,6 +40,7 @@ model Product {
   sku           String?
   active        Boolean  @default(true)
   featured      Boolean  @default(false) // shfaqet në homepage si një nga 3 boxat
+  freeShipping  Boolean  @default(false) // nëse true: transport falas në çdo shtet
   sortOrder     Int      @default(0)
 
   // ages, recommendation etj.

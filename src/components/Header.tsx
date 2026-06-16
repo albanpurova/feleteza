@@ -68,7 +68,7 @@ export default function Header() {
                 key={l.href}
                 href={l.href}
                 onClick={() => setMobileOpen(false)}
-                className="py-1 text-base font-semibold text-brand-navy"
+                className="py-2.5 text-base font-semibold text-brand-navy"
               >
                 {l.label}
               </Link>

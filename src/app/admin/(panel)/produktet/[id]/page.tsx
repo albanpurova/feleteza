@@ -189,6 +189,10 @@ export default async function ProductEditPage({
             <input type="checkbox" name="featured" defaultChecked={product?.featured ?? false} />
             Në homepage (një nga 3 boxat)
           </label>
+          <label className="flex items-center gap-2 text-sm text-brand-navy">
+            <input type="checkbox" name="freeShipping" defaultChecked={product?.freeShipping ?? false} />
+            Transport falas në çdo shtet
+          </label>
         </div>
 
         <button type="submit" className="btn-primary">

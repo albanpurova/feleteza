@@ -5,6 +5,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { useCart } from "@/components/CartProvider";
 import { formatEuro } from "@/lib/format";
+import { calcShipping, SHIPPING_COUNTRIES } from "@/lib/shipping";
+import { CITIES } from "@/lib/cities";
 
 type Form = {
   firstName: string;
@@ -37,10 +39,19 @@ export default function ShportaPage() {
   const [serverError, setServerError] = useState("");
 
   const required: (keyof Form)[] = ["firstName", "lastName", "phone", "city", "address", "country"];
-  const total = subtotal; // COD; transporti i përfshirë
+
+  // Transporti llogaritet menjëherë sipas shtetit + produkteve në shportë
+  const shipping = calcShipping(form.country, items);
+  const total = subtotal + shipping;
+  const cityOptions = form.country ? CITIES[form.country] ?? [] : [];
 
   function set<K extends keyof Form>(k: K, v: string) {
     setForm((f) => ({ ...f, [k]: v }));
+  }
+
+  // Kur ndryshon shteti, pastrojmë qytetin e zgjedhur
+  function setCountry(v: string) {
+    setForm((f) => ({ ...f, country: v, city: "" }));
   }
 
   async function submit() {
@@ -97,9 +108,31 @@ export default function ShportaPage() {
           <Field label="Mbiemri*" value={form.lastName} onChange={(v) => set("lastName", v)} error={errors.lastName} />
           <Field label="E-mail" type="email" value={form.email} onChange={(v) => set("email", v)} />
           <Field label="Numri i telefonit*" value={form.phone} onChange={(v) => set("phone", v)} error={errors.phone} />
-          <Field label="Qyteti*" value={form.city} onChange={(v) => set("city", v)} error={errors.city} />
-          <Field label="Adresa*" value={form.address} onChange={(v) => set("address", v)} error={errors.address} />
-          <Field label="Shteti*" value={form.country} onChange={(v) => set("country", v)} error={errors.country} />
+
+          {/* SHTETI */}
+          <SelectField
+            label="Shteti*"
+            value={form.country}
+            onChange={setCountry}
+            error={errors.country}
+            placeholder="Zgjidhni shtetin"
+            options={SHIPPING_COUNTRIES}
+          />
+
+          {/* QYTETI (varet nga shteti) */}
+          <SelectField
+            label="Qyteti*"
+            value={form.city}
+            onChange={(v) => set("city", v)}
+            error={errors.city}
+            placeholder={form.country ? "Zgjidhni qytetin" : "Zgjidhni fillimisht shtetin"}
+            options={cityOptions}
+            disabled={!form.country}
+          />
+
+          <div className="sm:col-span-2">
+            <Field label="Adresa*" value={form.address} onChange={(v) => set("address", v)} error={errors.address} />
+          </div>
         </div>
         <div className="mt-5">
           <label className="mb-1.5 block text-sm font-semibold text-brand-navy">Shënime shtesë (opcionale)</label>
@@ -141,7 +174,17 @@ export default function ShportaPage() {
         </div>
 
         <div className="mt-6 rounded-2xl border border-black/10 p-6">
-          <div className="flex items-center justify-between border-b border-gray-100 pb-4">
+          <div className="flex items-center justify-between text-sm text-brand-gray">
+            <span>Nëntotali</span>
+            <span className="font-semibold text-brand-navy">{formatEuro(subtotal)}</span>
+          </div>
+          <div className="mt-2 flex items-center justify-between text-sm text-brand-gray">
+            <span>Transporti{form.country ? ` (${form.country})` : ""}</span>
+            <span className="font-semibold text-brand-navy">
+              {!form.country ? "—" : shipping === 0 ? "Falas" : formatEuro(shipping)}
+            </span>
+          </div>
+          <div className="mt-4 flex items-center justify-between border-t border-gray-100 pt-4">
             <span className="font-semibold uppercase tracking-wide text-brand-navy">Total</span>
             <span className="text-lg font-bold text-brand-navy">{formatEuro(total)}</span>
           </div>
@@ -180,6 +223,45 @@ function Field({
         onChange={(e) => onChange(e.target.value)}
         className={`input-field ${error ? "border-brand-red ring-1 ring-brand-red/30" : ""}`}
       />
+    </div>
+  );
+}
+
+function SelectField({
+  label,
+  value,
+  onChange,
+  options,
+  placeholder,
+  error,
+  disabled,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  options: string[];
+  placeholder: string;
+  error?: boolean;
+  disabled?: boolean;
+}) {
+  return (
+    <div>
+      <label className="mb-1.5 block text-sm font-semibold text-brand-navy">{label}</label>
+      <select
+        value={value}
+        disabled={disabled}
+        onChange={(e) => onChange(e.target.value)}
+        className={`input-field bg-white ${error ? "border-brand-red ring-1 ring-brand-red/30" : ""} ${
+          disabled ? "cursor-not-allowed opacity-60" : ""
+        }`}
+      >
+        <option value="">{placeholder}</option>
+        {options.map((o) => (
+          <option key={o} value={o}>
+            {o}
+          </option>
+        ))}
+      </select>
     </div>
   );
 }

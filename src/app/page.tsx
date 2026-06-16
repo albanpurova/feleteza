@@ -63,7 +63,7 @@ export default async function HomePage() {
             <div key={r.id} className="rounded-2xl">
               {r.imageUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={r.imageUrl} alt={r.title} className="mb-4 aspect-[4/3] w-full rounded-2xl object-cover" />
+                <img src={r.imageUrl} alt="" className="mb-4 aspect-[4/3] w-full rounded-2xl object-cover" />
               ) : (
                 <div className="mb-4 aspect-[4/3] w-full rounded-2xl bg-brand-cream" />
               )}
@@ -84,7 +84,7 @@ export default async function HomePage() {
             <div key={e.id} className="overflow-hidden rounded-2xl border border-black/5 bg-white text-center shadow-sm">
               {e.imageUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={e.imageUrl} alt={e.label} className="aspect-[4/3] w-full object-cover" />
+                <img src={e.imageUrl} alt="" className="aspect-[4/3] w-full object-cover" />
               ) : (
                 <div className="aspect-[4/3] w-full bg-brand-cream" />
               )}
@@ -125,7 +125,7 @@ export default async function HomePage() {
             {moments.map((m) => (
               <div key={m.id} className="aspect-[3/5] overflow-hidden rounded-xl bg-white/40">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={m.imageUrl} alt="Moment" className="h-full w-full object-cover" />
+                <img src={m.imageUrl} alt="" className="h-full w-full object-cover" />
               </div>
             ))}
           </div>

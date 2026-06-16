@@ -139,6 +139,7 @@ prisma.config.ts           konfigurimi i Prisma 7 (DATABASE_URL)
 
 ## Shënime teknike
 
+- **Prisma 7 kërkon një _driver adapter_** për lidhjen me bazën (ndryshim nga Prisma 6). Ky projekt përdor `@prisma/adapter-pg` (te `src/lib/prisma.ts` dhe `prisma/seed.ts`); `DATABASE_URL` lexohet nga `.env`. Prandaj sigurohu që ke ekzekutuar `npm install` pasi u shtuan paketat `@prisma/adapter-pg` dhe `pg`.
 - **Çmimet & stoku** verifikohen gjithmonë në server gjatë checkout-it (klienti dërgon vetëm `productId` + sasinë), për siguri.
 - **Transporti** është i konfigurueshëm te paneli (Kontenti → Cilësimet: `shipping_kosovo`, `shipping_other`). Si parazgjedhje 0 (i përfshirë në çmim).
 - Nëse hapni panelin para se të bëni migrim/seed, faqet do shfaqin një mesazh që baza e të dhënave nuk është gati — kjo është normale.

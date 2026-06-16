@@ -143,6 +143,7 @@ exports.Prisma.ProductScalarFieldEnum = {
   sku: 'sku',
   active: 'active',
   featured: 'featured',
+  freeShipping: 'freeShipping',
   sortOrder: 'sortOrder',
   ageRange: 'ageRange',
   createdAt: 'createdAt',
