@@ -69,7 +69,7 @@ export default function HeroSlider({
 
         {/* Imazhi i produktit */}
         <div className="order-1 flex justify-center md:order-2">
-          <div className="relative aspect-square w-full max-w-md rounded-3xl bg-brand-cream-dark p-6">
+          <div className="relative aspect-square w-full max-w-md rounded-3xl p-6">
             {current?.image ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img

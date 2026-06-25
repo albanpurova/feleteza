@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import HeroSlider from "@/components/HeroSlider";
 import ReviewsSlider from "@/components/ReviewsSlider";
 import ProductCard from "@/components/ProductCard";
@@ -59,18 +60,32 @@ export default async function HomePage() {
           Pse FLETËZA?
         </h2>
         <div className="container-x mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {reasons.map((r) => (
-            <div key={r.id} className="rounded-2xl">
-              {r.imageUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={r.imageUrl} alt="" className="mb-4 aspect-[4/3] w-full rounded-2xl object-cover" />
-              ) : (
-                <div className="mb-4 aspect-[4/3] w-full rounded-2xl bg-brand-cream" />
-              )}
-              <h3 className="font-display text-lg font-bold text-brand-green">{r.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-brand-navy-light">{r.body}</p>
-            </div>
-          ))}
+          {reasons.map((r, index) => (
+          <div
+            key={r.id}
+            className={`rounded-2xl ${
+              index === 1 || index === 4 ? "-mt-30" : ""
+            }`}
+          >
+            {r.imageUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={r.imageUrl}
+                alt=""
+                className="mb-4 aspect-[4/3] w-full rounded-2xl object-cover"
+              />
+            ) : (
+              <div className="mb-4 aspect-[4/3] w-full rounded-2xl bg-brand-cream" />
+            )}
+
+            <h3 className="font-display text-lg font-bold text-brand-green">
+              {r.title}
+            </h3>
+            <p className="mt-2 text-sm leading-relaxed text-brand-navy-light">
+              {r.body}
+            </p>
+          </div>
+        ))}
         </div>
       </section>
 
@@ -111,7 +126,16 @@ export default async function HomePage() {
             {settings.mission_text ||
               "Misioni ynë është që të fëmijët të brumosim dashurinë për mendimin kritik dhe të mësuarit përmes materialeve kreative, argëtuese dhe tërheqëse."}
           </p>
-          <div className="aspect-video w-full rounded-2xl bg-white/20" />
+          <div className="w-full rounded-2xl bg-white/20">
+          <Image
+            src="/images/sf.png"
+            alt="Misioni"
+            width={640}
+            height={360}
+            className="h-full w-full object-cover"
+          />
+          </div>
+
         </div>
       </section>
 
