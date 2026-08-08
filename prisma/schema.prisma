@@ -41,6 +41,7 @@ model Product {
   active        Boolean  @default(true)
   featured      Boolean  @default(false) // shfaqet në homepage si një nga 3 boxat
   freeShipping  Boolean  @default(false) // nëse true: transport falas në çdo shtet
+  featuresTitle String?  // titulli i seksionit me boxa (p.sh. "Çka mësojmë nga kartat?")
   sortOrder     Int      @default(0)
 
   // ages, recommendation etj.

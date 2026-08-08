@@ -3,6 +3,8 @@ import Image from "next/image";
 import HeroSlider from "@/components/HeroSlider";
 import ReviewsSlider from "@/components/ReviewsSlider";
 import ProductCard from "@/components/ProductCard";
+import Carousel from "@/components/Carousel";
+import ArrowCarousel from "@/components/ArrowCarousel";
 import {
   getFeaturedProducts,
   getSettingsMap,
@@ -44,14 +46,14 @@ export default async function HomePage() {
 
       {/* 3 PRODUKTET */}
       <section className="container-x py-14">
-        <div className="grid gap-6 md:grid-cols-3">
+        <Carousel desktop="md:grid-cols-3" item="basis-[80%] sm:basis-[48%]">
           {products.slice(0, 3).map((p) => (
             <ProductCard
               key={p.id}
               p={{ productId: p.id, slug: p.slug, name: p.name, price: p.price.toString(), image: p.images[0]?.url ?? null, freeShipping: p.freeShipping }}
             />
           ))}
-        </div>
+        </Carousel>
       </section>
 
       {/* PSE FLETËZA */}
@@ -59,12 +61,13 @@ export default async function HomePage() {
         <h2 className="text-center font-display text-3xl font-extrabold text-brand-green">
           Pse FLETËZA?
         </h2>
-        <div className="container-x mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="container-x mt-10">
+        <Carousel desktop="md:grid-cols-2 lg:grid-cols-3 md:gap-8" item="basis-[85%] sm:basis-[55%]">
           {reasons.map((r, index) => (
           <div
             key={r.id}
             className={`rounded-2xl ${
-              index === 1 || index === 4 ? "-mt-30" : ""
+              index === 1 || index === 4 ? "md:-mt-30" : ""
             }`}
           >
             {r.imageUrl ? (
@@ -86,6 +89,7 @@ export default async function HomePage() {
             </p>
           </div>
         ))}
+        </Carousel>
         </div>
       </section>
 
@@ -94,7 +98,8 @@ export default async function HomePage() {
         <h2 className="text-center font-display text-2xl font-extrabold text-brand-navy sm:text-3xl">
           Të konceptuara dhe të zhvilluara nga ekspertë të edukimit të hershëm
         </h2>
-        <div className="mt-10 grid grid-cols-2 gap-5 lg:grid-cols-4">
+        <div className="mt-10">
+        <Carousel desktop="grid-cols-2 lg:grid-cols-4" item="basis-[45%] sm:basis-[30%]">
           {experts.map((e) => (
             <div key={e.id} className="overflow-hidden rounded-2xl border border-black/5 bg-white text-center shadow-sm">
               {e.imageUrl ? (
@@ -106,6 +111,7 @@ export default async function HomePage() {
               <p className="py-3 text-sm font-bold text-brand-navy">{e.label}</p>
             </div>
           ))}
+        </Carousel>
         </div>
       </section>
 
@@ -115,7 +121,7 @@ export default async function HomePage() {
           {settings.reviews_heading || "Mbi 5000 prindër dhe profesionistë kanë zgjedhur produktet tona"}
         </h2>
         <div className="mt-10">
-          <ReviewsSlider reviews={reviews.map((r) => ({ id: r.id, authorName: r.authorName, text: r.text, rating: r.rating }))} />
+          <ReviewsSlider reviews={reviews.map((r) => ({ id: r.id, authorName: r.authorName, text: r.text, rating: r.rating, imageUrl: r.imageUrl }))} />
         </div>
       </section>
 
@@ -140,26 +146,30 @@ export default async function HomePage() {
       </section>
 
       {/* MOMENTE */}
-      <section className="py-14">
+      <section className="bg-brand-yellow py-14">
         <h2 className="text-center font-display text-2xl font-extrabold text-brand-navy sm:text-3xl">
           Momente të ndara nga prindërit
         </h2>
-        <div className="mt-8 bg-brand-yellow py-8">
-          <div className="container-x grid grid-cols-3 gap-4 md:grid-cols-6">
+        <div className="container-x mt-8">
+          <ArrowCarousel
+            item="basis-[60%] sm:basis-[30%] md:basis-[15.5%]"
+            arrowClass="bg-white/80 shadow hover:bg-white"
+          >
             {moments.map((m) => (
               <div key={m.id} className="aspect-[3/5] overflow-hidden rounded-xl bg-white/40">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={m.imageUrl} alt="" className="h-full w-full object-cover" />
               </div>
             ))}
-          </div>
+          </ArrowCarousel>
         </div>
       </section>
 
       {/* BLOG */}
       <section className="container-x py-10">
         <h2 className="text-center font-display text-2xl font-extrabold text-brand-navy sm:text-3xl">Blog</h2>
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10">
+        <Carousel desktop="sm:grid-cols-2 lg:grid-cols-4" item="basis-[80%] sm:basis-[48%]">
           {posts.map((post) => (
             <Link key={post.id} href={`/blog/${post.slug}`} className="group block">
               <div className="aspect-[4/3] overflow-hidden rounded-xl bg-brand-cream">
@@ -173,6 +183,7 @@ export default async function HomePage() {
               </h3>
             </Link>
           ))}
+        </Carousel>
         </div>
       </section>
     </>

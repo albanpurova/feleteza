@@ -3,6 +3,8 @@ import ProductGallery from "@/components/ProductGallery";
 import AddToCartControls from "@/components/AddToCartControls";
 import FaqAccordion from "@/components/FaqAccordion";
 import ProductCard from "@/components/ProductCard";
+import Carousel from "@/components/Carousel";
+import ArrowCarousel from "@/components/ArrowCarousel";
 import { getProductBySlug, getAllProducts, getExperts, getMoments } from "@/lib/queries";
 import { formatEuro } from "@/lib/format";
 
@@ -81,18 +83,28 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       {/* ÇKA MËSOJMË / KATEGORITË */}
       {product.features.length > 0 && (
         <section className="container-x py-12">
-          <h2 className="text-center font-display text-2xl font-bold text-brand-navy">Çka mësojmë nga kartat?</h2>
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <h2 className="mx-auto max-w-2xl text-center font-display text-2xl font-bold text-brand-navy">
+            {product.featuresTitle || "Çka mësojmë nga kartat?"}
+          </h2>
+          <div className="mt-10">
+          <Carousel desktop="sm:grid-cols-2 lg:grid-cols-3" item="basis-[80%] sm:basis-[48%]">
             {product.features.map((f) => (
               <div
                 key={f.id}
-                className="rounded-2xl p-5"
+                className="flex h-full flex-col rounded-2xl p-5"
                 style={{ background: lighten(f.colorTag) }}
               >
+                {f.imageUrl && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={f.imageUrl} alt="" className="mb-4 aspect-[4/3] w-full rounded-xl object-cover" />
+                )}
                 <h3 className="font-bold text-brand-navy">{f.title}</h3>
-                {f.body && <p className="mt-2 text-sm text-brand-navy-light">{f.body}</p>}
+                {f.body && (
+                  <p className="mt-2 whitespace-pre-line text-sm text-brand-navy-light">{f.body}</p>
+                )}
               </div>
             ))}
+          </Carousel>
           </div>
         </section>
       )}
@@ -101,18 +113,20 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       {product.infoCards.length > 0 && (
         <section className="container-x py-12">
           <h2 className="text-center font-display text-2xl font-bold text-brand-green">Informacion rreth produktit</h2>
-          <div className="mt-10 grid grid-cols-2 gap-5 lg:grid-cols-4">
+          <div className="mt-10">
+          <Carousel desktop="grid-cols-2 lg:grid-cols-4" item="basis-[62%] sm:basis-[40%]">
             {product.infoCards.map((c) => (
-              <div key={c.id} className="rounded-2xl border border-black/5 bg-brand-cream p-6 text-center">
+              <div key={c.id} className="h-full rounded-2xl border border-black/5 bg-brand-cream p-6 text-center">
                 {c.imageUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={c.imageUrl} alt={c.label} className="mx-auto mb-3 h-24 object-contain" />
+                  <img src={c.imageUrl} alt="" className="mx-auto mb-3 h-24 object-contain" />
                 ) : (
                   <div className="mx-auto mb-3 h-24 w-full rounded-lg bg-white/50" />
                 )}
                 <p className="text-sm font-semibold text-brand-navy">{c.label}</p>
               </div>
             ))}
+          </Carousel>
           </div>
         </section>
       )}
@@ -123,35 +137,40 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <h2 className="text-center font-display text-2xl font-bold text-brand-navy">
             Të konceptuara dhe të zhvilluara nga ekspertë të edukimit të hershëm
           </h2>
-          <div className="mt-10 grid grid-cols-2 gap-5 lg:grid-cols-4">
+          <div className="mt-10">
+          <Carousel desktop="grid-cols-2 lg:grid-cols-4" item="basis-[45%] sm:basis-[30%]">
             {experts.map((e) => (
               <div key={e.id} className="overflow-hidden rounded-2xl border border-black/5 bg-white text-center shadow-sm">
                 {e.imageUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={e.imageUrl} alt={e.label} className="aspect-[4/3] w-full object-cover" />
+                  <img src={e.imageUrl} alt="" className="aspect-[4/3] w-full object-cover" />
                 ) : (
                   <div className="aspect-[4/3] w-full bg-brand-cream" />
                 )}
                 <p className="py-3 text-sm font-bold text-brand-navy">{e.label}</p>
               </div>
             ))}
+          </Carousel>
           </div>
         </section>
       )}
 
       {/* MOMENTE */}
       {moments.length > 0 && (
-        <section className="py-12">
+        <section className="bg-brand-yellow py-12">
           <h2 className="text-center font-display text-2xl font-bold text-brand-navy">Momente të ndara nga prindërit</h2>
-          <div className="mt-8 bg-brand-yellow py-8">
-            <div className="container-x grid grid-cols-3 gap-4 md:grid-cols-6">
+          <div className="container-x mt-8">
+            <ArrowCarousel
+              item="basis-[60%] sm:basis-[30%] md:basis-[15.5%]"
+              arrowClass="bg-white/80 shadow hover:bg-white"
+            >
               {moments.map((m) => (
                 <div key={m.id} className="aspect-[3/5] overflow-hidden rounded-xl bg-white/40">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={m.imageUrl} alt="Moment" className="h-full w-full object-cover" />
+                  <img src={m.imageUrl} alt="" className="h-full w-full object-cover" />
                 </div>
               ))}
-            </div>
+            </ArrowCarousel>
           </div>
         </section>
       )}

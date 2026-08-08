@@ -60,3 +60,7 @@ h1, h2, h3, h4, .font-display {
   50% { transform: translateY(-8px); }
 }
 .animate-floaty { animation: floaty 4s ease-in-out infinite; }
+
+/* Fshi shiritin e scroll-it te carousel-et në mobile */
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }

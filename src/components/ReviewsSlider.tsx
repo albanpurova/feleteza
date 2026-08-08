@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import ArrowCarousel from "./ArrowCarousel";
 
 type Review = {
   id: string;
   authorName: string;
   text: string;
   rating: number;
+  imageUrl?: string | null;
 };
 
 function Stars({ n }: { n: number }) {
@@ -22,51 +23,26 @@ function Stars({ n }: { n: number }) {
 }
 
 export default function ReviewsSlider({ reviews }: { reviews: Review[] }) {
-  const [start, setStart] = useState(0);
   if (reviews.length === 0) return null;
 
-  const visible = [
-    reviews[start % reviews.length],
-    reviews[(start + 1) % reviews.length],
-    reviews[(start + 2) % reviews.length],
-  ].filter(Boolean) as Review[];
-
   return (
-    <div className="relative">
-      <div className="grid gap-6 md:grid-cols-3">
-        {visible.map((r, idx) => (
-          <div
-            key={`${r.id}-${idx}`}
-            className={`rounded-2xl border border-black/5 bg-white p-6 text-center shadow-sm ${
-              idx === 1 ? "md:scale-105" : "opacity-90"
-            }`}
-          >
-            <div className="mx-auto mb-4 h-16 w-16 rounded-full bg-brand-cream" />
-            <Stars n={r.rating} />
-            <p className="mt-4 text-sm leading-relaxed text-brand-navy-light">{r.text}</p>
-            <p className="mt-4 text-sm font-bold text-brand-navy">{r.authorName}</p>
+    <ArrowCarousel item="basis-[86%] sm:basis-[46%] md:basis-[31%]">
+      {reviews.map((r) => (
+        <div
+          key={r.id}
+          className="flex h-full flex-col rounded-2xl border border-black/5 bg-white p-6 text-center shadow-sm"
+        >
+          <div className="mx-auto mb-4 h-16 w-16 overflow-hidden rounded-full bg-brand-cream">
+            {r.imageUrl && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={r.imageUrl} alt="" className="h-full w-full object-cover" />
+            )}
           </div>
-        ))}
-      </div>
-
-      {reviews.length > 3 && (
-        <>
-          <button
-            onClick={() => setStart((s) => (s - 1 + reviews.length) % reviews.length)}
-            className="absolute -left-3 top-1/2 hidden -translate-y-1/2 rounded-full bg-white p-2 shadow md:block"
-            aria-label="Më parë"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" d="M15 18l-6-6 6-6" /></svg>
-          </button>
-          <button
-            onClick={() => setStart((s) => (s + 1) % reviews.length)}
-            className="absolute -right-3 top-1/2 hidden -translate-y-1/2 rounded-full bg-white p-2 shadow md:block"
-            aria-label="Më pas"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" d="M9 6l6 6-6 6" /></svg>
-          </button>
-        </>
-      )}
-    </div>
+          <Stars n={r.rating} />
+          <p className="mt-4 flex-1 text-sm leading-relaxed text-brand-navy-light">{r.text}</p>
+          <p className="mt-4 text-sm font-bold text-brand-navy">{r.authorName}</p>
+        </div>
+      ))}
+    </ArrowCarousel>
   );
 }

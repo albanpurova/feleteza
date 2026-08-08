@@ -62,6 +62,7 @@ export async function saveProduct(formData: FormData) {
     active: bool(formData, "active"),
     featured: bool(formData, "featured"),
     freeShipping: bool(formData, "freeShipping"),
+    featuresTitle: str(formData, "featuresTitle") || null,
     sortOrder: int(formData, "sortOrder"),
     ageRange: str(formData, "ageRange") || null,
   };
@@ -122,21 +123,30 @@ export async function toggleProductFlag(formData: FormData) {
 // ============================================================
 //  FEATURES / INFO CARDS / FAQ specifike per produktin
 // ============================================================
-export async function addProductFeature(formData: FormData) {
-  await assertAdmin();
-  const productId = str(formData, "productId");
-  if (!productId) return;
-  await prisma.productFeature.create({
-    data: {
-      productId,
-      title: str(formData, "title"),
-      body: str(formData, "body") || null,
-      imageUrl: str(formData, "imageUrl") || null,
-      colorTag: str(formData, "colorTag") || null,
-      sortOrder: int(formData, "sortOrder"),
-    },
-  });
+async function revalidateProduct(productId: string) {
+  const p = await prisma.product.findUnique({ where: { id: productId }, select: { slug: true } });
+  if (p) revalidatePath(`/produkti/${p.slug}`);
   revalidatePath("/admin/produktet");
+}
+
+export async function saveProductFeature(formData: FormData) {
+  await assertAdmin();
+  const id = str(formData, "id");
+  const productId = str(formData, "productId");
+  const data = {
+    title: str(formData, "title"),
+    body: str(formData, "body") || null,
+    imageUrl: str(formData, "imageUrl") || null,
+    colorTag: str(formData, "colorTag") || null,
+    sortOrder: int(formData, "sortOrder"),
+  };
+  if (id) {
+    await prisma.productFeature.update({ where: { id }, data });
+    await revalidateProduct((await prisma.productFeature.findUnique({ where: { id }, select: { productId: true } }))!.productId);
+  } else if (productId) {
+    await prisma.productFeature.create({ data: { productId, ...data } });
+    await revalidateProduct(productId);
+  }
 }
 
 export async function deleteProductFeature(formData: FormData) {
@@ -146,19 +156,22 @@ export async function deleteProductFeature(formData: FormData) {
   revalidatePath("/admin/produktet");
 }
 
-export async function addProductInfoCard(formData: FormData) {
+export async function saveProductInfoCard(formData: FormData) {
   await assertAdmin();
+  const id = str(formData, "id");
   const productId = str(formData, "productId");
-  if (!productId) return;
-  await prisma.productInfoCard.create({
-    data: {
-      productId,
-      label: str(formData, "label"),
-      imageUrl: str(formData, "imageUrl") || null,
-      sortOrder: int(formData, "sortOrder"),
-    },
-  });
-  revalidatePath("/admin/produktet");
+  const data = {
+    label: str(formData, "label"),
+    imageUrl: str(formData, "imageUrl") || null,
+    sortOrder: int(formData, "sortOrder"),
+  };
+  if (id) {
+    await prisma.productInfoCard.update({ where: { id }, data });
+    await revalidateProduct((await prisma.productInfoCard.findUnique({ where: { id }, select: { productId: true } }))!.productId);
+  } else if (productId) {
+    await prisma.productInfoCard.create({ data: { productId, ...data } });
+    await revalidateProduct(productId);
+  }
 }
 
 export async function deleteProductInfoCard(formData: FormData) {
@@ -168,19 +181,22 @@ export async function deleteProductInfoCard(formData: FormData) {
   revalidatePath("/admin/produktet");
 }
 
-export async function addProductFaq(formData: FormData) {
+export async function saveProductFaq(formData: FormData) {
   await assertAdmin();
+  const id = str(formData, "id");
   const productId = str(formData, "productId");
-  if (!productId) return;
-  await prisma.productFaq.create({
-    data: {
-      productId,
-      question: str(formData, "question"),
-      answer: str(formData, "answer"),
-      sortOrder: int(formData, "sortOrder"),
-    },
-  });
-  revalidatePath("/admin/produktet");
+  const data = {
+    question: str(formData, "question"),
+    answer: str(formData, "answer"),
+    sortOrder: int(formData, "sortOrder"),
+  };
+  if (id) {
+    await prisma.productFaq.update({ where: { id }, data });
+    await revalidateProduct((await prisma.productFaq.findUnique({ where: { id }, select: { productId: true } }))!.productId);
+  } else if (productId) {
+    await prisma.productFaq.create({ data: { productId, ...data } });
+    await revalidateProduct(productId);
+  }
 }
 
 export async function deleteProductFaq(formData: FormData) {

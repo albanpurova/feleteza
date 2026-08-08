@@ -3,11 +3,11 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import {
   saveProduct,
-  addProductFeature,
+  saveProductFeature,
   deleteProductFeature,
-  addProductInfoCard,
+  saveProductInfoCard,
   deleteProductInfoCard,
-  addProductFaq,
+  saveProductFaq,
   deleteProductFaq,
 } from "@/app/admin/actions-products";
 import ImageUploader from "@/components/ImageUploader";
@@ -149,6 +149,10 @@ export default async function ProductEditPage({
           <input name="shippingNote" defaultValue={product?.shippingNote ?? ""} className={inputCls} />
         </Field>
 
+        <Field label="Titulli i seksionit me boxa" hint='p.sh. "Çka mësojmë nga kartat?" ose "…sipas moshës dhe zhvillimit"'>
+          <input name="featuresTitle" defaultValue={product?.featuresTitle ?? ""} className={inputCls} />
+        </Field>
+
         <Field label="Përshkrimi i plotë" hint="Mund të përdoret HTML i thjeshtë">
           <textarea
             name="description"
@@ -203,85 +207,135 @@ export default async function ProductEditPage({
       {/* SEKSIONET E NDËRLIDHURA — vetëm për produkt ekzistues */}
       {!isNew && product && (
         <>
-          {/* FEATURES — Çka mësojmë nga kartat */}
+          {/* FEATURES — boxat e seksionit */}
           <section className="bg-white rounded-xl border border-black/5 p-6 space-y-4">
-            <h2 className="font-display font-bold text-brand-navy">Çka mësojmë nga kartat? (kategoritë)</h2>
-            <div className="space-y-2">
-              {product.features.map((f) => (
-                <div key={f.id} className="flex items-start justify-between gap-3 border-b border-black/5 pb-2">
-                  <div className="text-sm">
-                    <span className="font-medium text-brand-navy">{f.title}</span>
-                    {f.body && <p className="text-brand-gray text-xs">{f.body}</p>}
-                  </div>
-                  <form action={deleteProductFeature}>
-                    <input type="hidden" name="id" value={f.id} />
-                    <button className="text-xs text-brand-red hover:underline">Fshi</button>
-                  </form>
-                </div>
-              ))}
-              {product.features.length === 0 && <p className="text-brand-gray text-sm">Asnjë kategori.</p>}
+            <div>
+              <h2 className="font-display font-bold text-brand-navy">Boxat e seksionit</h2>
+              <p className="text-xs text-brand-gray">
+                P.sh. kategoritë (“Alfabeti”, “Objektet”…) ose fazat sipas moshës. Secili box mund të ketë foto, titull, tekst dhe ngjyrë sfondi.
+              </p>
             </div>
-            <form action={addProductFeature} className="grid sm:grid-cols-2 gap-3 pt-2">
+
+            <div className="space-y-3">
+              {product.features.map((f) => (
+                <form key={f.id} action={saveProductFeature} className="rounded-lg border border-black/10 p-4 space-y-3">
+                  <input type="hidden" name="id" value={f.id} />
+                  <div className="flex gap-3">
+                    <div className="h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-black/10 bg-brand-cream">
+                      {f.imageUrl && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={f.imageUrl} alt="" className="h-full w-full object-cover" />
+                      )}
+                    </div>
+                    <div className="grid flex-1 gap-2 sm:grid-cols-2">
+                      <input name="title" defaultValue={f.title} placeholder="Titulli" className={inputCls} />
+                      <input name="colorTag" defaultValue={f.colorTag ?? ""} placeholder="Ngjyra sfondi #fde2cf" className={inputCls} />
+                    </div>
+                  </div>
+                  <textarea name="body" defaultValue={f.body ?? ""} placeholder="Përshkrim (mund të ketë disa rreshta)" className={inputCls} rows={2} />
+                  <input id={`feat-img-${f.id}`} name="imageUrl" defaultValue={f.imageUrl ?? ""} placeholder="URL e imazhit" className={inputCls} />
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <ImageUploader targetId={`feat-img-${f.id}`} mode="replace" />
+                      <input name="sortOrder" type="number" defaultValue={f.sortOrder} className={`${inputCls} w-24`} title="Renditja" />
+                    </div>
+                    <div className="flex gap-4">
+                      <button className="btn-outline text-sm">Ruaj</button>
+                      <button formAction={deleteProductFeature} className="text-sm text-brand-red hover:underline">Fshi</button>
+                    </div>
+                  </div>
+                </form>
+              ))}
+              {product.features.length === 0 && <p className="text-brand-gray text-sm">Asnjë box ende.</p>}
+            </div>
+
+            {/* Shto box të ri */}
+            <form action={saveProductFeature} className="grid gap-3 rounded-lg border border-dashed border-black/15 p-4 sm:grid-cols-2">
               <input type="hidden" name="productId" value={product.id} />
-              <input name="title" placeholder="Titulli (p.sh. Alfabeti)" className={inputCls} required />
-              <input name="body" placeholder="Përshkrim i shkurtër" className={inputCls} />
-              <input name="colorTag" placeholder="Ngjyra (p.sh. #fde2cf)" className={inputCls} />
-              <input name="sortOrder" type="number" placeholder="Renditja" className={inputCls} />
-              <button className="btn-outline sm:col-span-2">+ Shto kategori</button>
+              <input name="title" placeholder="Titulli i ri (p.sh. Alfabeti)" className={inputCls} required />
+              <input name="colorTag" placeholder="Ngjyra sfondi #fde2cf" className={inputCls} />
+              <textarea name="body" placeholder="Përshkrim" className={`${inputCls} sm:col-span-2`} rows={2} />
+              <input id="feat-img-new" name="imageUrl" placeholder="URL e imazhit" className={`${inputCls} sm:col-span-2`} />
+              <div className="sm:col-span-2 flex items-center justify-between">
+                <ImageUploader targetId="feat-img-new" mode="replace" />
+                <button className="btn-primary text-sm">+ Shto box</button>
+              </div>
             </form>
           </section>
 
           {/* INFO CARDS */}
           <section className="bg-white rounded-xl border border-black/5 p-6 space-y-4">
-            <h2 className="font-display font-bold text-brand-navy">Informacion rreth produktit (kartela)</h2>
-            <div className="space-y-2">
+            <h2 className="font-display font-bold text-brand-navy">Informacion rreth produktit (kartela të vogla)</h2>
+
+            <div className="grid gap-3 sm:grid-cols-2">
               {product.infoCards.map((c) => (
-                <div key={c.id} className="flex items-center justify-between gap-3 border-b border-black/5 pb-2">
-                  <span className="text-sm text-brand-navy">{c.label}</span>
-                  <form action={deleteProductInfoCard}>
-                    <input type="hidden" name="id" value={c.id} />
-                    <button className="text-xs text-brand-red hover:underline">Fshi</button>
-                  </form>
-                </div>
+                <form key={c.id} action={saveProductInfoCard} className="rounded-lg border border-black/10 p-4 space-y-3">
+                  <input type="hidden" name="id" value={c.id} />
+                  <div className="flex gap-3">
+                    <div className="h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-black/10 bg-brand-cream">
+                      {c.imageUrl && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={c.imageUrl} alt="" className="h-full w-full object-contain" />
+                      )}
+                    </div>
+                    <input name="label" defaultValue={c.label} placeholder="Etiketa (p.sh. 180 karta)" className={`${inputCls} flex-1`} />
+                  </div>
+                  <input id={`info-img-${c.id}`} name="imageUrl" defaultValue={c.imageUrl ?? ""} placeholder="URL e imazhit" className={inputCls} />
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <ImageUploader targetId={`info-img-${c.id}`} mode="replace" />
+                      <input name="sortOrder" type="number" defaultValue={c.sortOrder} className={`${inputCls} w-20`} title="Renditja" />
+                    </div>
+                    <div className="flex gap-4">
+                      <button className="btn-outline text-sm">Ruaj</button>
+                      <button formAction={deleteProductInfoCard} className="text-sm text-brand-red hover:underline">Fshi</button>
+                    </div>
+                  </div>
+                </form>
               ))}
               {product.infoCards.length === 0 && <p className="text-brand-gray text-sm">Asnjë kartelë.</p>}
             </div>
-            <form action={addProductInfoCard} className="grid sm:grid-cols-2 gap-3 pt-2">
+
+            <form action={saveProductInfoCard} className="grid gap-3 rounded-lg border border-dashed border-black/15 p-4 sm:grid-cols-2">
               <input type="hidden" name="productId" value={product.id} />
-              <input name="label" placeholder="Etiketa (p.sh. 180 karta)" className={inputCls} required />
-              <input id="infocard-img" name="imageUrl" placeholder="URL e imazhit" className={inputCls} />
-              <input name="sortOrder" type="number" placeholder="Renditja" className={inputCls} />
-              <div className="sm:col-span-2">
-                <ImageUploader targetId="infocard-img" mode="replace" />
+              <input name="label" placeholder="Etiketa e re (p.sh. 14 × 11 cm)" className={inputCls} required />
+              <input id="info-img-new" name="imageUrl" placeholder="URL e imazhit" className={inputCls} />
+              <div className="sm:col-span-2 flex items-center justify-between">
+                <ImageUploader targetId="info-img-new" mode="replace" />
+                <button className="btn-primary text-sm">+ Shto kartelë</button>
               </div>
-              <button className="btn-outline sm:col-span-2">+ Shto kartelë</button>
             </form>
           </section>
 
           {/* FAQ */}
           <section className="bg-white rounded-xl border border-black/5 p-6 space-y-4">
             <h2 className="font-display font-bold text-brand-navy">Pyetjet më të shpeshta</h2>
-            <div className="space-y-2">
+
+            <div className="space-y-3">
               {product.faqs.map((q) => (
-                <div key={q.id} className="flex items-start justify-between gap-3 border-b border-black/5 pb-2">
-                  <div className="text-sm">
-                    <span className="font-medium text-brand-navy">{q.question}</span>
-                    <p className="text-brand-gray text-xs">{q.answer}</p>
+                <form key={q.id} action={saveProductFaq} className="rounded-lg border border-black/10 p-4 space-y-2">
+                  <input type="hidden" name="id" value={q.id} />
+                  <input name="question" defaultValue={q.question} placeholder="Pyetja" className={inputCls} />
+                  <textarea name="answer" defaultValue={q.answer} placeholder="Përgjigja" className={inputCls} rows={2} />
+                  <div className="flex items-center justify-between">
+                    <input name="sortOrder" type="number" defaultValue={q.sortOrder} className={`${inputCls} w-24`} title="Renditja" />
+                    <div className="flex gap-4">
+                      <button className="btn-outline text-sm">Ruaj</button>
+                      <button formAction={deleteProductFaq} className="text-sm text-brand-red hover:underline">Fshi</button>
+                    </div>
                   </div>
-                  <form action={deleteProductFaq}>
-                    <input type="hidden" name="id" value={q.id} />
-                    <button className="text-xs text-brand-red hover:underline">Fshi</button>
-                  </form>
-                </div>
+                </form>
               ))}
               {product.faqs.length === 0 && <p className="text-brand-gray text-sm">Asnjë pyetje.</p>}
             </div>
-            <form action={addProductFaq} className="space-y-3 pt-2">
+
+            <form action={saveProductFaq} className="space-y-3 rounded-lg border border-dashed border-black/15 p-4">
               <input type="hidden" name="productId" value={product.id} />
-              <input name="question" placeholder="Pyetja" className={inputCls} required />
+              <input name="question" placeholder="Pyetja e re" className={inputCls} required />
               <textarea name="answer" placeholder="Përgjigja" className={inputCls} rows={3} required />
-              <input name="sortOrder" type="number" placeholder="Renditja" className={inputCls} />
-              <button className="btn-outline">+ Shto pyetje</button>
+              <div className="flex justify-end">
+                <button className="btn-primary text-sm">+ Shto pyetje</button>
+              </div>
             </form>
           </section>
         </>

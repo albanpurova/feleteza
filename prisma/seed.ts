@@ -42,6 +42,7 @@ async function main() {
       active: true,
       featured: true,
       freeShipping: true,
+      featuresTitle: "Çka mësojmë nga kartat?",
       sortOrder: 1,
       description: `Ndihmoni fëmijën tuaj të mësojë dhe të zbulojë botën përmes kartave edukative Fletëza. Të krijuara nga ekspertë të zhvillimit të hershëm, kartat ndihmojnë në stimulimin e gjuhës, komunikimit dhe zhvillimit kognitiv në fazat më të rëndësishme të fëmijërisë.
 
@@ -111,6 +112,7 @@ Kartat Fletëza janë të qëndrueshme dhe të lehta për t'u mirëmbajtur. Të 
       sku: "FL-BEBIN",
       active: true,
       featured: true,
+      featuresTitle: "Kartat stimuluese për bebin janë të ndara sipas moshës dhe zhvillimit",
       sortOrder: 2,
       description: `Çdo kartë përfshin ngjyra të forta, kontraste të theksuara dhe vizatime tërheqëse, të cilat e ndihmojnë bebin të përqendrohet, t'i ndjekë objektet dhe të fillojë të kuptojë realitetin përreth.
 
@@ -174,6 +176,7 @@ Nxit zhvillimin kognitiv dhe komunikimin: Bebi fillon t'i dallojë ngjyrat dhe f
       sku: "FL-ALFABETI",
       active: true,
       featured: true,
+      featuresTitle: "Çka mësojmë nga kartat?",
       sortOrder: 3,
       description:
         "Karta edukative për të mësuar alfabetin shqip në mënyrë vizuale dhe argëtuese, me ilustrime për secilën shkronjë.",

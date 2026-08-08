@@ -1,9 +1,13 @@
 export function formatEuro(value: number | string): string {
   const n = typeof value === "string" ? parseFloat(value) : value;
-  return new Intl.NumberFormat("sq-AL", {
-    style: "currency",
-    currency: "EUR",
-  }).format(isNaN(n) ? 0 : n);
+  const safe = isNaN(n) ? 0 : n;
+  // Formatim deterministik (i njëjtë në server dhe shfletues) → shmang gabimin e hidratimit.
+  // Stili shqip: pikë për mijëshet, presje për decimalet, € pas shumës. P.sh. 1.234,56 €
+  const fixed = Math.abs(safe).toFixed(2);
+  const [intPart, decPart] = fixed.split(".");
+  const withThousands = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  const sign = safe < 0 ? "-" : "";
+  return `${sign}${withThousands},${decPart} €`;
 }
 
 export function slugify(text: string): string {
