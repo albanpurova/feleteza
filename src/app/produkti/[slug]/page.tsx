@@ -163,7 +163,6 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 <div key={f.id} className="flex items-center gap-4">
                   <div
                     className="grid h-28 w-28 shrink-0 place-items-center rounded-2xl p-2 sm:h-32 sm:w-32"
-                    style={{ background: lighten(f.colorTag) }}
                   >
                     {f.imageUrl && (
                       // eslint-disable-next-line @next/next/no-img-element
@@ -200,7 +199,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <Carousel desktop="grid-cols-2 lg:grid-cols-4" item="basis-[62%] sm:basis-[40%]">
             {product.infoCards.map((c) => (
               <div key={c.id} className="flex h-full flex-col rounded-2xl border border-black/5 bg-[#f3f4f6] p-4 text-center">
-                <p className="mb-3 text-sm font-semibold text-brand-navy">{c.label}</p>
+                {/* <p className="mb-3 text-sm font-semibold text-brand-navy">{c.label}</p> */}
                 {c.imageUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={c.imageUrl} alt="" className="mx-auto mt-auto h-28 w-full object-contain" />
