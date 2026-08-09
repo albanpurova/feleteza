@@ -9,6 +9,8 @@ import {
   deleteProductInfoCard,
   saveProductFaq,
   deleteProductFaq,
+  saveProductBlock,
+  deleteProductBlock,
 } from "@/app/admin/actions-products";
 import ImageUploader from "@/components/ImageUploader";
 
@@ -22,6 +24,7 @@ async function loadProduct(id: string) {
       bullets: { orderBy: { sortOrder: "asc" } },
       features: { orderBy: { sortOrder: "asc" } },
       infoCards: { orderBy: { sortOrder: "asc" } },
+      blocks: { orderBy: { sortOrder: "asc" } },
       faqs: { orderBy: { sortOrder: "asc" } },
     },
   });
@@ -152,6 +155,30 @@ export default async function ProductEditPage({
         <Field label="Titulli i seksionit me boxa" hint='p.sh. "Çka mësojmë nga kartat?" ose "…sipas moshës dhe zhvillimit"'>
           <input name="featuresTitle" defaultValue={product?.featuresTitle ?? ""} className={inputCls} />
         </Field>
+
+        <Field label="Seksioni A — titulli (boxa foto/titull/përshkrim)" hint='p.sh. "Pse FLETËZA?"'>
+          <input name="blocksTitle" defaultValue={product?.blocksTitle ?? ""} className={inputCls} />
+        </Field>
+
+        <div className="rounded-lg border border-black/10 p-4 space-y-4">
+          <p className="text-sm font-semibold text-brand-navy">Seksioni B — foto e madhe + listë me pika</p>
+          <Field label="Titulli (opsional)">
+            <input name="highlightTitle" defaultValue={product?.highlightTitle ?? ""} className={inputCls} />
+          </Field>
+          <Field label="Foto (URL)">
+            <input id="highlight-img" name="highlightImage" defaultValue={product?.highlightImage ?? ""} className={inputCls} />
+            <ImageUploader targetId="highlight-img" mode="replace" />
+          </Field>
+          <Field label="Pikat (një për rresht)" hint="Secili rresht shfaqet me një shenjë ✓">
+            <textarea
+              name="highlightPoints"
+              defaultValue={product?.highlightPoints ?? ""}
+              className={inputCls}
+              rows={4}
+              placeholder={"Stimulojnë trurin e bebës\nZhvillojnë shikimin dhe fokusin"}
+            />
+          </Field>
+        </div>
 
         <Field label="Përshkrimi i plotë" hint="Mund të përdoret HTML i thjeshtë">
           <textarea
@@ -303,6 +330,55 @@ export default async function ProductEditPage({
               <div className="sm:col-span-2 flex items-center justify-between">
                 <ImageUploader targetId="info-img-new" mode="replace" />
                 <button className="btn-primary text-sm">+ Shto kartelë</button>
+              </div>
+            </form>
+          </section>
+
+          {/* SEKSIONI A — BOXA (foto/titull/përshkrim) */}
+          <section className="bg-white rounded-xl border border-black/5 p-6 space-y-4">
+            <div>
+              <h2 className="font-display font-bold text-brand-navy">Seksioni A — boxat (foto sipër, titull, përshkrim)</h2>
+              <p className="text-xs text-brand-gray">3 boxa horizontal nën titullin e “Seksionit A”.</p>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2">
+              {product.blocks.map((b) => (
+                <form key={b.id} action={saveProductBlock} className="rounded-lg border border-black/10 p-4 space-y-3">
+                  <input type="hidden" name="id" value={b.id} />
+                  <div className="flex gap-3">
+                    <div className="h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-black/10 bg-brand-cream">
+                      {b.imageUrl && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={b.imageUrl} alt="" className="h-full w-full object-cover" />
+                      )}
+                    </div>
+                    <input name="title" defaultValue={b.title} placeholder="Titulli" className={`${inputCls} flex-1`} />
+                  </div>
+                  <textarea name="body" defaultValue={b.body ?? ""} placeholder="Përshkrim" className={inputCls} rows={2} />
+                  <input id={`block-img-${b.id}`} name="imageUrl" defaultValue={b.imageUrl ?? ""} placeholder="URL e imazhit" className={inputCls} />
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <ImageUploader targetId={`block-img-${b.id}`} mode="replace" />
+                      <input name="sortOrder" type="number" defaultValue={b.sortOrder} className={`${inputCls} w-20`} title="Renditja" />
+                    </div>
+                    <div className="flex gap-4">
+                      <button className="btn-outline text-sm">Ruaj</button>
+                      <button formAction={deleteProductBlock} className="text-sm text-brand-red hover:underline">Fshi</button>
+                    </div>
+                  </div>
+                </form>
+              ))}
+              {product.blocks.length === 0 && <p className="text-brand-gray text-sm">Asnjë box.</p>}
+            </div>
+
+            <form action={saveProductBlock} className="grid gap-3 rounded-lg border border-dashed border-black/15 p-4 sm:grid-cols-2">
+              <input type="hidden" name="productId" value={product.id} />
+              <input name="title" placeholder="Titulli i ri" className={inputCls} required />
+              <input id="block-img-new" name="imageUrl" placeholder="URL e imazhit" className={inputCls} />
+              <textarea name="body" placeholder="Përshkrim" className={`${inputCls} sm:col-span-2`} rows={2} />
+              <div className="sm:col-span-2 flex items-center justify-between">
+                <ImageUploader targetId="block-img-new" mode="replace" />
+                <button className="btn-primary text-sm">+ Shto box</button>
               </div>
             </form>
           </section>

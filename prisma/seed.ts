@@ -113,6 +113,8 @@ Kartat Fletëza janë të qëndrueshme dhe të lehta për t'u mirëmbajtur. Të 
       active: true,
       featured: true,
       featuresTitle: "Kartat stimuluese për bebin janë të ndara sipas moshës dhe zhvillimit",
+      highlightTitle: null,
+      highlightPoints: "Stimulojnë trurin e bebës\nZhvillojnë shikimin, fokusin dhe aftësinë për të ndjekur objektet\nQetësojnë dhe relaksojnë gjatë ndërrimit të pelenave dhe tummy time\nTë krijuara nga ekspertë të zhvillimit të hershëm për të mbështetur zhvillimin e hershëm të gjuhës dhe komunikimit",
       sortOrder: 2,
       description: `Çdo kartë përfshin ngjyra të forta, kontraste të theksuara dhe vizatime tërheqëse, të cilat e ndihmojnë bebin të përqendrohet, t'i ndjekë objektet dhe të fillojë të kuptojë realitetin përreth.
 

@@ -63,6 +63,10 @@ export async function saveProduct(formData: FormData) {
     featured: bool(formData, "featured"),
     freeShipping: bool(formData, "freeShipping"),
     featuresTitle: str(formData, "featuresTitle") || null,
+    blocksTitle: str(formData, "blocksTitle") || null,
+    highlightTitle: str(formData, "highlightTitle") || null,
+    highlightImage: str(formData, "highlightImage") || null,
+    highlightPoints: str(formData, "highlightPoints") || null,
     sortOrder: int(formData, "sortOrder"),
     ageRange: str(formData, "ageRange") || null,
   };
@@ -203,5 +207,34 @@ export async function deleteProductFaq(formData: FormData) {
   await assertAdmin();
   const id = str(formData, "id");
   if (id) await prisma.productFaq.delete({ where: { id } });
+  revalidatePath("/admin/produktet");
+}
+
+// ============================================================
+//  SEKSIONI A — BOXA (ProductBlock)
+// ============================================================
+export async function saveProductBlock(formData: FormData) {
+  await assertAdmin();
+  const id = str(formData, "id");
+  const productId = str(formData, "productId");
+  const data = {
+    title: str(formData, "title"),
+    body: str(formData, "body") || null,
+    imageUrl: str(formData, "imageUrl") || null,
+    sortOrder: int(formData, "sortOrder"),
+  };
+  if (id) {
+    await prisma.productBlock.update({ where: { id }, data });
+    await revalidateProduct((await prisma.productBlock.findUnique({ where: { id }, select: { productId: true } }))!.productId);
+  } else if (productId) {
+    await prisma.productBlock.create({ data: { productId, ...data } });
+    await revalidateProduct(productId);
+  }
+}
+
+export async function deleteProductBlock(formData: FormData) {
+  await assertAdmin();
+  const id = str(formData, "id");
+  if (id) await prisma.productBlock.delete({ where: { id } });
   revalidatePath("/admin/produktet");
 }

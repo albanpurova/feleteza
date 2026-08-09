@@ -55,6 +55,7 @@ export async function getProductBySlug(slug: string) {
           bullets: { orderBy: { sortOrder: "asc" } },
           features: { orderBy: { sortOrder: "asc" } },
           infoCards: { orderBy: { sortOrder: "asc" } },
+          blocks: { orderBy: { sortOrder: "asc" } },
           faqs: { orderBy: { sortOrder: "asc" } },
         },
       }),

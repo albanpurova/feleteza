@@ -80,6 +80,72 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         </section>
       )}
 
+      {/* SEKSIONI A — BOXA (foto sipër, titull, përshkrim) */}
+      {product.blocks.length > 0 && (
+        <section className="container-x py-12">
+          {product.blocksTitle && (
+            <h2 className="mx-auto max-w-2xl text-center font-display text-2xl font-bold text-brand-green">
+              {product.blocksTitle}
+            </h2>
+          )}
+          <div className="mt-10">
+            <Carousel desktop="sm:grid-cols-2 lg:grid-cols-3" item="basis-[85%] sm:basis-[48%]">
+              {product.blocks.map((b) => (
+                <div key={b.id} className="flex h-full flex-col">
+                  <div className="mb-4 aspect-[3/2] w-full overflow-hidden rounded-2xl bg-brand-cream">
+                    {b.imageUrl && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={b.imageUrl} alt="" className="h-full w-full object-cover" />
+                    )}
+                  </div>
+                  <h3 className="font-bold text-brand-green">{b.title}</h3>
+                  {b.body && (
+                    <p className="mt-2 text-sm leading-relaxed text-brand-navy-light">{b.body}</p>
+                  )}
+                </div>
+              ))}
+            </Carousel>
+          </div>
+        </section>
+      )}
+
+      {/* SEKSIONI B — FOTO E MADHE + LISTË ME PIKA */}
+      {(product.highlightImage || product.highlightPoints) && (
+        <section className="container-x py-12">
+          {product.highlightTitle && (
+            <h2 className="mb-8 text-center font-display text-2xl font-bold text-brand-navy">
+              {product.highlightTitle}
+            </h2>
+          )}
+          <div className="grid items-center gap-8 md:grid-cols-5">
+            <div className="md:col-span-3">
+              {product.highlightImage && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={product.highlightImage} alt="" className="w-full rounded-2xl object-cover" />
+              )}
+            </div>
+            {product.highlightPoints && (
+              <ul className="space-y-4 md:col-span-2">
+                {product.highlightPoints
+                  .split("\n")
+                  .map((p) => p.trim())
+                  .filter(Boolean)
+                  .map((point, i) => (
+                    <li key={i} className="flex gap-3 text-sm leading-relaxed text-brand-navy">
+                      <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand-green/15 text-brand-green">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M20 6L9 17l-5-5" />
+                        </svg>
+                      </span>
+                      <span>{point}</span>
+                    </li>
+                  ))}
+              </ul>
+            )}
+          </div>
+        </section>
+      )}
+
       {/* ÇKA MËSOJMË / KATEGORITË */}
       {product.features.length > 0 && (
         <section className="container-x py-12">
@@ -97,6 +163,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 <div key={f.id} className="flex items-center gap-4">
                   <div
                     className="grid h-28 w-28 shrink-0 place-items-center rounded-2xl p-2 sm:h-32 sm:w-32"
+                    style={{ background: lighten(f.colorTag) }}
                   >
                     {f.imageUrl && (
                       // eslint-disable-next-line @next/next/no-img-element
@@ -133,10 +200,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <Carousel desktop="grid-cols-2 lg:grid-cols-4" item="basis-[62%] sm:basis-[40%]">
             {product.infoCards.map((c) => (
               <div key={c.id} className="flex h-full flex-col rounded-2xl border border-black/5 bg-[#f3f4f6] p-4 text-center">
-                {/*<p className="mb-3 text-sm font-semibold text-brand-navy">{c.label}</p> */}
+                <p className="mb-3 text-sm font-semibold text-brand-navy">{c.label}</p>
                 {c.imageUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={c.imageUrl} alt="" className="mx-auto mt-auto w-full object-contain" />
+                  <img src={c.imageUrl} alt="" className="mx-auto mt-auto h-28 w-full object-contain" />
                 ) : (
                   <div className="mx-auto mt-auto h-28 w-full rounded-lg bg-white/70" />
                 )}
