@@ -202,7 +202,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 {/* <p className="mb-3 text-sm font-semibold text-brand-navy">{c.label}</p> */}
                 {c.imageUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={c.imageUrl} alt="" className="mx-auto mt-auto h-28 w-full object-contain" />
+                  <img src={c.imageUrl} alt="" className="mx-auto mt-auto w-full object-contain" />
                 ) : (
                   <div className="mx-auto mt-auto h-28 w-full rounded-lg bg-white/70" />
                 )}
