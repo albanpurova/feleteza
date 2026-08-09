@@ -87,23 +87,39 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             {product.featuresTitle || "Çka mësojmë nga kartat?"}
           </h2>
           <div className="mt-10">
-          <Carousel desktop="sm:grid-cols-2 lg:grid-cols-3" item="basis-[80%] sm:basis-[48%]">
-            {product.features.map((f) => (
-              <div
-                key={f.id}
-                className="flex h-full flex-col rounded-2xl p-5"
-                style={{ background: lighten(f.colorTag) }}
-              >
-                {f.imageUrl && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={f.imageUrl} alt="" className="mb-4 aspect-[4/3] w-full rounded-xl object-cover" />
-                )}
-                <h3 className="font-bold text-brand-navy">{f.title}</h3>
-                {f.body && (
-                  <p className="mt-2 whitespace-pre-line text-sm text-brand-navy-light">{f.body}</p>
-                )}
-              </div>
-            ))}
+          <Carousel desktop="sm:grid-cols-2 lg:grid-cols-3 md:gap-x-8 md:gap-y-10" item="basis-[85%] sm:basis-[48%]">
+            {product.features.map((f) => {
+              // Nëse s'ka body, titulli ndahet në rreshta (ndarje me presje jashtë kllapave)
+              const lines = f.body
+                ? []
+                : f.title.split(/,(?![^(]*\))/).map((s) => s.trim()).filter(Boolean);
+              return (
+                <div key={f.id} className="flex items-center gap-4">
+                  <div
+                    className="grid h-28 w-28 shrink-0 place-items-center rounded-2xl p-2 sm:h-32 sm:w-32"
+                  >
+                    {f.imageUrl && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={f.imageUrl} alt="" className="h-full w-full rounded-xl object-contain" />
+                    )}
+                  </div>
+                  <div className="text-sm leading-relaxed text-brand-navy-light">
+                    {f.body ? (
+                      <>
+                        <h3 className="font-bold text-brand-navy">{f.title}</h3>
+                        <p className="mt-1 whitespace-pre-line">{f.body}</p>
+                      </>
+                    ) : (
+                      <ul className="space-y-1">
+                        {lines.map((line, i) => (
+                          <li key={i}>{line}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
           </Carousel>
           </div>
         </section>
@@ -116,14 +132,14 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <div className="mt-10">
           <Carousel desktop="grid-cols-2 lg:grid-cols-4" item="basis-[62%] sm:basis-[40%]">
             {product.infoCards.map((c) => (
-              <div key={c.id} className="h-full rounded-2xl border border-black/5 bg-brand-cream p-6 text-center">
+              <div key={c.id} className="flex h-full flex-col rounded-2xl border border-black/5 bg-[#f3f4f6] p-4 text-center">
+                {/*<p className="mb-3 text-sm font-semibold text-brand-navy">{c.label}</p> */}
                 {c.imageUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={c.imageUrl} alt="" className="mx-auto mb-3 h-24 object-contain" />
+                  <img src={c.imageUrl} alt="" className="mx-auto mt-auto w-full object-contain" />
                 ) : (
-                  <div className="mx-auto mb-3 h-24 w-full rounded-lg bg-white/50" />
+                  <div className="mx-auto mt-auto h-28 w-full rounded-lg bg-white/70" />
                 )}
-                <p className="text-sm font-semibold text-brand-navy">{c.label}</p>
               </div>
             ))}
           </Carousel>
