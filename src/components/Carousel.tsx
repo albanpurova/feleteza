@@ -20,7 +20,7 @@ export default function Carousel({
 }) {
   return (
     <div
-      className={`no-scrollbar -mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-3 md:mx-0 md:grid md:gap-6 md:overflow-visible md:px-0 md:pb-0 ${desktop} ${className}`}
+      className={`no-scrollbar flex snap-x snap-mandatory gap-5 overflow-x-auto pb-3 md:grid md:gap-6 md:overflow-visible md:pb-0 ${desktop} ${className}`}
     >
       {Children.map(children, (child, i) => (
         <div key={i} className={`shrink-0 snap-start ${item} md:shrink md:basis-auto`}>
