@@ -152,8 +152,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <h2 className="mx-auto max-w-2xl text-center font-display text-2xl font-bold text-brand-navy">
             {product.featuresTitle || "Çka mësojmë nga kartat?"}
           </h2>
-          <div className="mt-10">
-          <Carousel desktop="sm:grid-cols-2 lg:grid-cols-3 md:gap-x-8 md:gap-y-10" item="basis-[85%] sm:basis-[48%]">
+          <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 md:gap-x-8 md:gap-y-10">
             {product.features.map((f) => {
               // Nëse s'ka body, titulli ndahet në rreshta (ndarje me presje jashtë kllapave)
               const lines = f.body
@@ -186,7 +185,6 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 </div>
               );
             })}
-          </Carousel>
           </div>
         </section>
       )}
@@ -195,8 +193,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       {product.infoCards.length > 0 && (
         <section className="container-x py-12">
           <h2 className="text-center font-display text-2xl font-bold text-brand-green">Informacion rreth produktit</h2>
-          <div className="mt-10">
-          <Carousel desktop="grid-cols-2 lg:grid-cols-4" item="basis-[62%] sm:basis-[40%]">
+          <div className="mt-10 grid grid-cols-2 gap-5 lg:grid-cols-4">
             {product.infoCards.map((c) => (
               <div key={c.id} className="flex h-full flex-col rounded-2xl border border-black/5 bg-[#f3f4f6] p-4 text-center">
                 {/* <p className="mb-3 text-sm font-semibold text-brand-navy">{c.label}</p> */}
@@ -208,7 +205,6 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 )}
               </div>
             ))}
-          </Carousel>
           </div>
         </section>
       )}
@@ -219,8 +215,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <h2 className="text-center font-display text-2xl font-bold text-brand-navy">
             Të konceptuara dhe të zhvilluara nga ekspertë të edukimit të hershëm
           </h2>
-          <div className="mt-10">
-          <Carousel desktop="grid-cols-2 lg:grid-cols-4" item="basis-[45%] sm:basis-[30%]">
+          <div className="mt-10 grid grid-cols-2 gap-5 lg:grid-cols-4">
             {experts.map((e) => (
               <div key={e.id} className="overflow-hidden rounded-2xl border border-black/5 bg-white text-center shadow-sm">
                 {e.imageUrl ? (
@@ -232,7 +227,6 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 <p className="py-3 text-sm font-bold text-brand-navy">{e.label}</p>
               </div>
             ))}
-          </Carousel>
           </div>
         </section>
       )}
