@@ -57,9 +57,9 @@ export default async function BlogPage() {
             <Link
               key={post.id}
               href={`/blog/${post.slug}`}
-              className="group flex gap-5 rounded-xl border border-black/5 bg-white p-4 shadow-sm transition hover:shadow-md"
+              className="group flex gap-5 rounded-2xl border border-black/5 bg-white p-5 shadow-sm transition hover:shadow-md"
             >
-              <div className="h-32 w-44 shrink-0 overflow-hidden rounded-xl bg-brand-cream sm:h-36 sm:w-48">
+              <div className="h-44 w-40 shrink-0 overflow-hidden rounded-xl bg-brand-cream sm:h-64 sm:w-56">
                 {post.coverImage && (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
@@ -71,11 +71,14 @@ export default async function BlogPage() {
               </div>
               <div className="min-w-0 self-center">
                 <span className="text-sm text-brand-gray">{fmtDate(post.publishedAt)}</span>
-                <h3 className="mt-1 text-lg font-bold leading-snug text-brand-green group-hover:underline line-clamp-2">
+                <h3 className="mt-1 text-xl font-bold leading-snug text-brand-green group-hover:underline line-clamp-3 sm:text-2xl">
                   {post.title}
                 </h3>
                 {post.excerpt && (
-                  <p className="mt-2 text-sm leading-relaxed text-brand-gray line-clamp-3">{post.excerpt}</p>
+                  <>
+                    <div className="my-3 h-px w-full bg-black/10" />
+                    <p className="text-base leading-relaxed text-brand-gray line-clamp-2">{post.excerpt}</p>
+                  </>
                 )}
               </div>
             </Link>
