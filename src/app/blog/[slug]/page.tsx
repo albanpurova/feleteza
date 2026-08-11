@@ -57,21 +57,19 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             <h2 className="border-b-2 border-brand-orange pb-2 font-display text-lg font-bold text-brand-navy">
               Artikujt e fundit
             </h2>
-            <div className="mt-5 space-y-5">
+            <div className="mt-5 divide-y divide-black/10">
               {latest.map((p) => (
-                <Link key={p.id} href={`/blog/${p.slug}`} className="group flex gap-3">
-                  <div className="h-16 w-20 shrink-0 overflow-hidden rounded-lg bg-brand-cream">
+                <Link key={p.id} href={`/blog/${p.slug}`} className="group block py-5 first:pt-0">
+                  <div className="aspect-[16/9] w-full overflow-hidden rounded-xl bg-brand-cream">
                     {p.coverImage && (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={p.coverImage} alt="" className="h-full w-full object-cover transition group-hover:scale-105" />
                     )}
                   </div>
-                  <div className="min-w-0">
-                    <span className="text-xs text-brand-gray">{fmtDate(p.publishedAt)}</span>
-                    <h3 className="text-sm font-bold leading-snug text-brand-green group-hover:underline line-clamp-2">
-                      {p.title}
-                    </h3>
-                  </div>
+                  <span className="mt-3 block text-xs text-brand-gray">{fmtDate(p.publishedAt)}</span>
+                  <h3 className="mt-1 font-bold leading-snug text-brand-green group-hover:underline line-clamp-2">
+                    {p.title}
+                  </h3>
                 </Link>
               ))}
               {latest.length === 0 && <p className="text-sm text-brand-gray">S'ka artikuj të tjerë.</p>}
