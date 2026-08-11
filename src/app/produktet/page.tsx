@@ -9,8 +9,7 @@ export default async function ProduktetPage() {
   const products = await getAllProducts();
   return (
     <div className="container-x py-14">
-      <h1 className="font-display text-3xl font-extrabold text-brand-navy">Produktet tona</h1>
-      <p className="mt-2 text-brand-gray">Karta edukative të krijuara nga ekspertë të zhvillimit të hershëm.</p>
+      <h1 className="font-display text-3xl font-extrabold text-brand-navy">Produktet</h1>
       <div className="mt-10">
       <Carousel desktop="sm:grid-cols-2 lg:grid-cols-3" item="basis-[80%] sm:basis-[48%]">
         {products.map((p) => (

@@ -42,8 +42,8 @@ export default function ProductCard({ p }: { p: ProductCardData }) {
             <div className="flex h-full items-center justify-center text-brand-gray">Imazh</div>
           )}
         </div>
-        <h3 className="mt-3 text-sm font-bold text-brand-navy">{p.name}</h3>
-        <p className="mt-1 text-sm font-semibold text-brand-orange">{formatEuro(p.price)}</p>
+        <h3 className="mt-3 text-base font-bold text-brand-navy sm:text-lg">{p.name}</h3>
+        <p className="mt-1 text-base font-semibold text-brand-orange">{formatEuro(p.price)}</p>
       </Link>
 
       <button

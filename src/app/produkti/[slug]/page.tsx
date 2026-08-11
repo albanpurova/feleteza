@@ -109,7 +109,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         </section>
       )}
 
-      {/* SEKSIONI B — FOTO E MADHE + LISTË ME PIKA */}
+{/* SEKSIONI B — FOTO E MADHE + LISTË ME PIKA */}
       {(product.highlightImage || product.highlightPoints) && (
         <section className="container-x py-12">
           {product.highlightTitle && (
@@ -117,15 +117,15 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               {product.highlightTitle}
             </h2>
           )}
-          <div className="grid items-center gap-8 md:grid-cols-5">
-            <div className="md:col-span-3">
+          <div className="grid items-center gap-8 md:grid-cols-[35fr_65fr]">
+            <div>
               {product.highlightImage && (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={product.highlightImage} alt="" className="w-full rounded-2xl object-cover" />
               )}
             </div>
             {product.highlightPoints && (
-              <ul className="space-y-4 md:col-span-2">
+              <ul className="space-y-4">
                 {product.highlightPoints
                   .split("\n")
                   .map((p) => p.trim())

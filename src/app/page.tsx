@@ -63,8 +63,8 @@ export default async function HomePage() {
         </h2>
         <div className="container-x mt-10">
         <Carousel desktop="md:grid-cols-2 lg:grid-cols-3 md:gap-8" item="basis-[85%] sm:basis-[55%]">
-          {reasons.map((r) => (
-          <div key={r.id} className="rounded-2xl">
+          {reasons.map((r, index) => (
+          <div key={r.id} className={`rounded-2xl ${index % 3 === 1 ? "" : "lg:mt-24"}`}>
             {r.imageUrl ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
