@@ -181,7 +181,11 @@ export default async function AdminContentPage() {
           <input name="authorName" placeholder="Emri" className={inputCls} required />
           <input name="rating" type="number" min={1} max={5} defaultValue={5} placeholder="Yjet" className={inputCls} />
           <textarea name="text" placeholder="Teksti" className={`${inputCls} sm:col-span-2`} rows={2} required />
+          <input id="review-img-new" name="imageUrl" placeholder="URL imazhi" className={inputCls} />
           <input name="sortOrder" type="number" placeholder="Renditja" className={inputCls} />
+          <div className="sm:col-span-2">
+            <ImageUploader targetId="review-img-new" mode="replace" />
+          </div>
         </AddForm>
       </Section>
 

@@ -10,10 +10,12 @@ export default function ImageUploader({
   targetId,
   mode = "append",
   label = "Ngarko imazh",
+  template,
 }: {
   targetId: string;
   mode?: "append" | "replace";
   label?: string;
+  template?: string; // p.sh. '<img src="{url}" alt="" />' — përdoret në modin append
 }) {
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState("");
@@ -37,10 +39,11 @@ export default function ImageUploader({
         | HTMLInputElement
         | null;
       if (el) {
+        const value = template ? template.replace("{url}", data.url) : data.url;
         if (mode === "append") {
-          el.value = (el.value ? el.value.trimEnd() + "\n" : "") + data.url;
+          el.value = (el.value ? el.value.trimEnd() + "\n" : "") + value;
         } else {
-          el.value = data.url;
+          el.value = value;
         }
       }
       setMsg("U ngarkua ✓");

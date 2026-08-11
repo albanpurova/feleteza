@@ -42,7 +42,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <p className="mt-2 text-sm text-brand-gray">{fmtDate(post.publishedAt)}</p>
 
           <div
-            className="prose mt-6 max-w-none text-brand-navy-light [&_h2]:mt-8 [&_h2]:font-display [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-brand-navy [&_h3]:mt-6 [&_h3]:font-bold [&_h3]:text-brand-navy [&_li]:mt-1 [&_p]:mt-4 [&_p]:leading-relaxed [&_ul]:mt-4 [&_ul]:list-disc [&_ul]:pl-5"
+            className="prose mt-6 max-w-none text-brand-navy-light [&_h2]:mt-8 [&_h2]:font-display [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-brand-navy [&_h3]:mt-6 [&_h3]:font-bold [&_h3]:text-brand-navy [&_li]:mt-1 [&_p]:mt-4 [&_p]:leading-relaxed [&_ul]:mt-4 [&_ul]:list-disc [&_ul]:pl-5 [&_img]:my-6 [&_img]:w-full [&_img]:rounded-2xl [&_figure]:my-6 [&_figcaption]:mt-2 [&_figcaption]:text-center [&_figcaption]:text-xs [&_figcaption]:text-brand-gray [&_a]:text-brand-orange [&_a]:underline"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
 

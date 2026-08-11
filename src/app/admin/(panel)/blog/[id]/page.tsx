@@ -67,12 +67,17 @@ export default async function BlogEditPage({ params }: { params: Promise<{ id: s
         <label className="block">
           <span className="block text-sm font-semibold text-brand-navy mb-1">Përmbajtja (HTML) *</span>
           <textarea
+            id="blog-content"
             name="content"
             defaultValue={post?.content ?? ""}
             className={`${inputCls} font-mono text-sm`}
             rows={14}
             required
           />
+          <div className="mt-1 flex items-center gap-3">
+            <ImageUploader targetId="blog-content" mode="append" label="Shto foto në tekst" template={'<img src="{url}" alt="" />'} />
+            <span className="text-xs text-brand-gray">Fotoja shtohet në fund; zhvendose te vendi që dëshiron brenda tekstit.</span>
+          </div>
         </label>
 
         <div className="grid sm:grid-cols-2 gap-4 items-end">

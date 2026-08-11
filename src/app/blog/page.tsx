@@ -16,14 +16,8 @@ export default async function BlogPage() {
 
   return (
     <div>
-      {/* Header band */}
-      <div className="bg-gradient-to-r from-brand-navy to-brand-navy-light">
-        <div className="container-x py-10">
-          <h1 className="font-display text-3xl font-extrabold text-white">Blog</h1>
-        </div>
-      </div>
-
       <div className="container-x py-12">
+        <h1 className="mb-10 text-center font-display text-3xl font-extrabold text-brand-navy sm:text-4xl">Blog</h1>
         {/* POSTIMI I FUNDIT — 100% gjerësi, foto 50% + tekst 50% */}
         {featured && (
           <Link
@@ -41,12 +35,12 @@ export default async function BlogPage() {
               )}
             </div>
             <div className="flex flex-col justify-center p-6 sm:p-8">
-              <span className="text-xs text-brand-gray">{fmtDate(featured.publishedAt)}</span>
-              <h2 className="mt-2 font-display text-2xl font-bold text-brand-green group-hover:underline">
+              <span className="text-sm text-brand-gray">{fmtDate(featured.publishedAt)}</span>
+              <h2 className="mt-2 font-display text-3xl font-bold text-brand-green group-hover:underline">
                 {featured.title}
               </h2>
               {featured.excerpt && (
-                <p className="mt-3 text-sm leading-relaxed text-brand-navy-light line-clamp-3">
+                <p className="mt-3 text-base leading-relaxed text-brand-navy-light line-clamp-3">
                   {featured.excerpt}
                 </p>
               )}
@@ -63,9 +57,9 @@ export default async function BlogPage() {
             <Link
               key={post.id}
               href={`/blog/${post.slug}`}
-              className="group flex gap-4 rounded-xl border border-black/5 bg-white p-3 shadow-sm transition hover:shadow-md"
+              className="group flex gap-5 rounded-xl border border-black/5 bg-white p-4 shadow-sm transition hover:shadow-md"
             >
-              <div className="h-24 w-32 shrink-0 overflow-hidden rounded-lg bg-brand-cream">
+              <div className="h-32 w-44 shrink-0 overflow-hidden rounded-xl bg-brand-cream sm:h-36 sm:w-48">
                 {post.coverImage && (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
@@ -75,13 +69,13 @@ export default async function BlogPage() {
                   />
                 )}
               </div>
-              <div className="min-w-0">
-                <span className="text-xs text-brand-gray">{fmtDate(post.publishedAt)}</span>
-                <h3 className="mt-1 font-bold leading-snug text-brand-green group-hover:underline line-clamp-2">
+              <div className="min-w-0 self-center">
+                <span className="text-sm text-brand-gray">{fmtDate(post.publishedAt)}</span>
+                <h3 className="mt-1 text-lg font-bold leading-snug text-brand-green group-hover:underline line-clamp-2">
                   {post.title}
                 </h3>
                 {post.excerpt && (
-                  <p className="mt-1 text-xs leading-relaxed text-brand-gray line-clamp-2">{post.excerpt}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-brand-gray line-clamp-3">{post.excerpt}</p>
                 )}
               </div>
             </Link>
