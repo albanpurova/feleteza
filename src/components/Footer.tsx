@@ -105,7 +105,7 @@ export default function Footer() {
                 Faleminderit! Mesazhi u dërgua.
               </p>
             ) : (
-              <div className="w-[70%] space-y-2">
+              <div className="w-[100%] space-y-2">
                 <input
                   className="w-full rounded-md border-0 bg-white px-3 py-2 text-sm outline-none"
                   placeholder="E-mail"
