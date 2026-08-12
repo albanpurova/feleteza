@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export type MediaItem = { id: string; url: string; poster?: string | null };
 
@@ -12,12 +12,17 @@ export default function MediaGallery({
   items,
   columns = "grid-cols-2 lg:grid-cols-4",
   aspect = "aspect-square",
+  carousel = false,
+  itemBasis = "basis-[47%] sm:basis-[31%] lg:basis-[23%]",
 }: {
   items: MediaItem[];
   columns?: string;
   aspect?: string;
+  carousel?: boolean;
+  itemBasis?: string;
 }) {
   const [open, setOpen] = useState<number | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const close = useCallback(() => setOpen(null), []);
   const prev = useCallback(
@@ -44,41 +49,80 @@ export default function MediaGallery({
     };
   }, [open, close, prev, next]);
 
+  function scrollByDir(dir: number) {
+    const el = scrollRef.current;
+    if (el) el.scrollBy({ left: el.clientWidth * 0.8 * dir, behavior: "smooth" });
+  }
+
   if (items.length === 0) return null;
 
   const current = open !== null ? items[open] : null;
 
+  const thumbs = items.map((m, i) => (
+    <button
+      key={m.id}
+      type="button"
+      onClick={() => setOpen(i)}
+      className={`group relative ${aspect} overflow-hidden rounded-2xl bg-brand-cream ${
+        carousel ? `shrink-0 snap-start ${itemBasis}` : ""
+      }`}
+    >
+      {isVideo(m.url) ? (
+        <>
+          {m.poster ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={m.poster} alt="" className="h-full w-full object-cover" />
+          ) : (
+            <video src={m.url} muted playsInline preload="metadata" className="h-full w-full object-cover" />
+          )}
+          <span className="absolute inset-0 grid place-items-center bg-black/10 transition group-hover:bg-black/20">
+            <span className="grid h-14 w-14 place-items-center rounded-full bg-brand-green text-white shadow-lg">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+            </span>
+          </span>
+        </>
+      ) : (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={m.poster || m.url} alt="" className="h-full w-full object-cover transition group-hover:scale-105" />
+      )}
+    </button>
+  ));
+
   return (
     <>
-      <div className={`grid gap-4 ${columns}`}>
-        {items.map((m, i) => (
-          <button
-            key={m.id}
-            type="button"
-            onClick={() => setOpen(i)}
-            className={`group relative ${aspect} overflow-hidden rounded-2xl bg-brand-cream`}
-          >
-            {isVideo(m.url) ? (
-              <>
-                {m.poster ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={m.poster} alt="" className="h-full w-full object-cover" />
-                ) : (
-                  <video src={m.url} muted playsInline preload="metadata" className="h-full w-full object-cover" />
-                )}
-                <span className="absolute inset-0 grid place-items-center bg-black/10 transition group-hover:bg-black/20">
-                  <span className="grid h-14 w-14 place-items-center rounded-full bg-brand-green text-white shadow-lg">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
-                  </span>
-                </span>
-              </>
-            ) : (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={m.poster || m.url} alt="" className="h-full w-full object-cover transition group-hover:scale-105" />
-            )}
-          </button>
-        ))}
-      </div>
+      {carousel ? (
+        <div className="relative">
+          {items.length > 1 && (
+            <button
+              type="button"
+              onClick={() => scrollByDir(-1)}
+              aria-label="Prapa"
+              className="absolute left-0 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-white/80 text-brand-navy shadow transition hover:bg-white sm:-left-3"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 18l-6-6 6-6" />
+              </svg>
+            </button>
+          )}
+          <div ref={scrollRef} className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-1">
+            {thumbs}
+          </div>
+          {items.length > 1 && (
+            <button
+              type="button"
+              onClick={() => scrollByDir(1)}
+              aria-label="Para"
+              className="absolute right-0 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-white/80 text-brand-navy shadow transition hover:bg-white sm:-right-3"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 6l6 6-6 6" />
+              </svg>
+            </button>
+          )}
+        </div>
+      ) : (
+        <div className={`grid gap-4 ${columns}`}>{thumbs}</div>
+      )}
 
       {current && (
         <div

@@ -149,7 +149,7 @@ export default async function HomePage() {
         <div className="container-x mt-8">
           <MediaGallery
             items={moments.map((m) => ({ id: m.id, url: m.imageUrl }))}
-            columns="grid-cols-2 lg:grid-cols-4"
+            carousel
           />
         </div>
       </section>

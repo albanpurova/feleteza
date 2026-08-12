@@ -245,9 +245,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <h2 className="text-center font-display text-2xl font-bold text-brand-navy">Momente të ndara nga prindërit</h2>
           <div className="container-x mt-8">
             <MediaGallery
-              items={moments.map((m) => ({ id: m.id, url: m.imageUrl }))}
-              columns="grid-cols-2 lg:grid-cols-4"
-            />
+            items={moments.map((m) => ({ id: m.id, url: m.imageUrl }))}
+            carousel
+          />
           </div>
         </section>
       )}
