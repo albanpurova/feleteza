@@ -64,7 +64,7 @@ export default function ProductGallery({
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={m.poster} alt="" className="h-full w-full rounded object-cover" />
                   ) : (
-                    <video src={m.url} muted playsInline preload="metadata" className="h-full w-full rounded object-cover" />
+                    <video src={`${m.url}#t=0.1`} muted playsInline preload="metadata" className="h-full w-full rounded object-cover" />
                   )}
                   <span className="absolute inset-0 grid place-items-center">
                     <span className="grid h-8 w-8 place-items-center rounded-full bg-brand-green text-white shadow">
