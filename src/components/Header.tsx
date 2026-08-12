@@ -76,7 +76,7 @@ export default function Header() {
             <Link
               href="/produktet"
               onClick={() => setMobileOpen(false)}
-              className="btn-primary mt-2 uppercase"
+              className="py-2.5 text-base font-semibold text-brand-navy"
             >
               Produktet
             </Link>

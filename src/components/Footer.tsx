@@ -31,7 +31,7 @@ export default function Footer() {
 
   return (
     <footer className="mt-20 bg-[#eef3f2]">
-      <div className="container-x grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-4">
+      <div className="container-x grid grid-cols-2 gap-8 py-14 lg:grid-cols-4">
         <div>
           <Logo />
           <p className="mt-4 max-w-xs text-sm text-brand-gray">
@@ -48,6 +48,7 @@ export default function Footer() {
           <Link href="https://qet1mv72z2lm5wy2.public.blob.vercel-storage.com/uploads/Manuali%20i%20pe%CC%88rdorimit%20-%20Flete%CC%88zat%20stimuluese%20pe%CC%88r%20bebin%200%2B%20muaj.pdf" className="hover:text-brand-green" target="_blank">Manuali i përdorimit - Fletëzat stimuluese për bebin 0+ muaj</Link>
         </nav>
 
+        <div className="col-span-2 grid grid-cols-[3fr_2fr] gap-6 lg:contents">
         <div>
           <h3 className="mb-3 font-bold text-brand-navy">Na kontaktoni</h3>
           {sent ? (
@@ -85,6 +86,7 @@ export default function Footer() {
             </a>
           </div>
           <p className="mt-4 text-sm text-brand-gray">info@fleteza.com</p>
+        </div>
         </div>
       </div>
 
