@@ -1,5 +1,4 @@
 import ProductCard from "@/components/ProductCard";
-import Carousel from "@/components/Carousel";
 import { getAllProducts } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
@@ -10,15 +9,13 @@ export default async function ProduktetPage() {
   return (
     <div className="container-x py-14">
       <h1 className="font-display text-3xl font-extrabold text-brand-navy">Produktet</h1>
-      <div className="mt-10">
-      <Carousel desktop="sm:grid-cols-2 lg:grid-cols-3" item="basis-[80%] sm:basis-[48%]">
+      <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {products.map((p) => (
           <ProductCard
             key={p.id}
             p={{ productId: p.id, slug: p.slug, name: p.name, price: p.price.toString(), image: p.images[0]?.url ?? null, freeShipping: p.freeShipping }}
           />
         ))}
-      </Carousel>
       </div>
     </div>
   );

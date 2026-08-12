@@ -10,7 +10,6 @@ export default async function ThankYouPage({
   const { nr } = await searchParams;
   return (
     <div className="container-x py-24 text-center">
-      <div className="mx-auto mb-6 text-5xl">🐝</div>
       <h1 className="font-display text-3xl font-extrabold text-brand-navy sm:text-4xl">
         Porosia juaj u pranua me sukses!
       </h1>
