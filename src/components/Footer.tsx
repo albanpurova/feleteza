@@ -33,7 +33,7 @@ export default function Footer() {
 
   return (
     <footer className="mt-20 bg-[#eef3f2]">
-      <div className="container-x grid grid-cols-1 gap-10 py-14 lg:grid-cols-4 lg:gap-8">
+      <div className="container-x grid grid-cols-1 gap-3 py-14 lg:grid-cols-4 lg:gap-8">
 
         {/* Logo / Description */}
         <div className="w-1/2 mb-10 lg:mb-0 lg:w-auto">
