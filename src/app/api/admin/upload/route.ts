@@ -3,7 +3,10 @@ import { writeFile, mkdir } from "fs/promises";
 import path from "path";
 import { getSession } from "@/lib/auth";
 
-const ALLOWED = ["image/jpeg", "image/png", "image/webp", "image/gif", "image/svg+xml"];
+const ALLOWED = [
+  "image/jpeg", "image/png", "image/webp", "image/gif", "image/svg+xml",
+  "video/mp4", "video/webm", "video/ogg", "video/quicktime",
+];
 const MAX_BYTES = 4 * 1024 * 1024; // 4MB (limiti i ngarkimit server në Vercel është ~4.5MB)
 
 export async function POST(req: NextRequest) {

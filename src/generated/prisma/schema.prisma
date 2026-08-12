@@ -25,23 +25,30 @@ model AdminUser {
 //  PRODUKTET
 // ============================================================
 model Product {
-  id             String   @id @default(cuid())
-  slug           String   @unique
-  name           String
-  shortDesc      String? // teksti i shkurtër poshtë çmimit
-  price          Decimal  @db.Decimal(10, 2)
-  compareAtPrice Decimal? @db.Decimal(10, 2)
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  name            String
+  shortDesc       String? // teksti i shkurtër poshtë çmimit
+  price           Decimal  @db.Decimal(10, 2)
+  compareAtPrice  Decimal? @db.Decimal(10, 2)
   // Çmimet e transportit / teksti i transportit
-  shippingNote   String?
+  shippingNote    String?
   // Përshkrimi i gjatë (HTML/markdown i thjeshtë)
-  description    String?
+  description     String?
   // Stoku
-  stock          Int      @default(0)
-  sku            String?
-  active         Boolean  @default(true)
-  featured       Boolean  @default(false) // shfaqet në homepage si një nga 3 boxat
-  freeShipping   Boolean  @default(false) // nëse true: transport falas në çdo shtet
-  sortOrder      Int      @default(0)
+  stock           Int      @default(0)
+  sku             String?
+  active          Boolean  @default(true)
+  featured        Boolean  @default(false) // shfaqet në homepage si një nga 3 boxat
+  freeShipping    Boolean  @default(false) // nëse true: transport falas në çdo shtet
+  featuresTitle   String? // titulli i seksionit me boxa (p.sh. "Çka mësojmë nga kartat?")
+  // Seksioni A: 3 boxa (foto sipër, titull, përshkrim)
+  blocksTitle     String?
+  // Seksioni B: foto e madhe + listë me pika (checklist)
+  highlightTitle  String?
+  highlightImage  String?
+  highlightPoints String? // një pikë për rresht
+  sortOrder       Int      @default(0)
 
   // ages, recommendation etj.
   ageRange String?
@@ -53,6 +60,10 @@ model Product {
   features  ProductFeature[]
   // Seksioni "Informacion rreth produktit" (kartela me ikona)
   infoCards ProductInfoCard[]
+  // Seksioni A: boxa (foto, titull, përshkrim)
+  blocks    ProductBlock[]
+  // Video të produktit (me player me ngjyra brendi)
+  videos    ProductVideo[]
   // FAQ specifike për produktin
   faqs      ProductFaq[]
 
@@ -103,6 +114,26 @@ model ProductFaq {
   id        String  @id @default(cuid())
   question  String
   answer    String
+  sortOrder Int     @default(0)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+}
+
+model ProductBlock {
+  id        String  @id @default(cuid())
+  title     String
+  body      String?
+  imageUrl  String?
+  sortOrder Int     @default(0)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+}
+
+model ProductVideo {
+  id        String  @id @default(cuid())
+  url       String
+  title     String?
+  thumbnail String?
   sortOrder Int     @default(0)
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String

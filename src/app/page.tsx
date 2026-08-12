@@ -4,7 +4,7 @@ import HeroSlider from "@/components/HeroSlider";
 import ReviewsSlider from "@/components/ReviewsSlider";
 import ProductCard from "@/components/ProductCard";
 import Carousel from "@/components/Carousel";
-import ArrowCarousel from "@/components/ArrowCarousel";
+import MediaGallery from "@/components/MediaGallery";
 import {
   getFeaturedProducts,
   getSettingsMap,
@@ -141,24 +141,19 @@ export default async function HomePage() {
       </section>
 
       {/* MOMENTE */}
+      {moments.length > 0 && (
       <section className="bg-brand-yellow py-14">
         <h2 className="text-center font-display text-2xl font-extrabold text-brand-navy sm:text-3xl">
           Momente të ndara nga prindërit
         </h2>
         <div className="container-x mt-8">
-          <ArrowCarousel
-            item="basis-[60%] sm:basis-[30%] md:basis-[15.5%]"
-            arrowClass="bg-white/80 shadow hover:bg-white"
-          >
-            {moments.map((m) => (
-              <div key={m.id} className="aspect-[3/5] overflow-hidden rounded-xl bg-white/40">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={m.imageUrl} alt="" className="h-full w-full object-cover" />
-              </div>
-            ))}
-          </ArrowCarousel>
+          <MediaGallery
+            items={moments.map((m) => ({ id: m.id, url: m.imageUrl }))}
+            columns="grid-cols-2 lg:grid-cols-4"
+          />
         </div>
       </section>
+      )}
 
       {/* BLOG */}
       <section className="container-x py-10">

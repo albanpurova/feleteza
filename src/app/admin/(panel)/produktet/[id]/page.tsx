@@ -11,8 +11,12 @@ import {
   deleteProductFaq,
   saveProductBlock,
   deleteProductBlock,
+  saveProductVideo,
+  deleteProductVideo,
 } from "@/app/admin/actions-products";
 import ImageUploader from "@/components/ImageUploader";
+import BlobUploader from "@/components/BlobUploader";
+import RichTextEditor from "@/components/RichTextEditor";
 
 export const dynamic = "force-dynamic";
 
@@ -25,6 +29,7 @@ async function loadProduct(id: string) {
       features: { orderBy: { sortOrder: "asc" } },
       infoCards: { orderBy: { sortOrder: "asc" } },
       blocks: { orderBy: { sortOrder: "asc" } },
+      videos: { orderBy: { sortOrder: "asc" } },
       faqs: { orderBy: { sortOrder: "asc" } },
     },
   });
@@ -180,13 +185,8 @@ export default async function ProductEditPage({
           </Field>
         </div>
 
-        <Field label="Përshkrimi i plotë" hint="Mund të përdoret HTML i thjeshtë">
-          <textarea
-            name="description"
-            defaultValue={product?.description ?? ""}
-            className={inputCls}
-            rows={6}
-          />
+        <Field label="Përshkrimi i plotë" hint="Përdor editorin: tituj, lista, foto, lidhje…">
+          <RichTextEditor name="description" defaultValue={product?.description ?? ""} />
         </Field>
 
         <Field label="Imazhet (një URL për rresht)">
@@ -379,6 +379,53 @@ export default async function ProductEditPage({
               <div className="sm:col-span-2 flex items-center justify-between">
                 <ImageUploader targetId="block-img-new" mode="replace" />
                 <button className="btn-primary text-sm">+ Shto box</button>
+              </div>
+            </form>
+          </section>
+
+          {/* VIDEO */}
+          <section className="bg-white rounded-xl border border-black/5 p-6 space-y-4">
+            <div>
+              <h2 className="font-display font-bold text-brand-navy">Video të produktit</h2>
+              <p className="text-xs text-brand-gray">
+                Ngarko një video (max ~4MB) ose vendos URL-në e një videoje (.mp4/.webm). Player-i shfaqet me ngjyrat e brendit.
+              </p>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2">
+              {product.videos.map((v) => (
+                <form key={v.id} action={saveProductVideo} className="rounded-lg border border-black/10 p-4 space-y-3">
+                  <input type="hidden" name="id" value={v.id} />
+                  <input name="title" defaultValue={v.title ?? ""} placeholder="Titulli (opsional)" className={inputCls} />
+                  <input id={`video-url-${v.id}`} name="url" defaultValue={v.url} placeholder="URL e videos (.mp4)" className={inputCls} />
+                  <input id={`video-thumb-${v.id}`} name="thumbnail" defaultValue={v.thumbnail ?? ""} placeholder="URL e fotos (opsionale, si kapak)" className={inputCls} />
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div className="flex items-center gap-2">
+                      <BlobUploader targetId={`video-url-${v.id}`} label="Ngarko video" />
+                      <ImageUploader targetId={`video-thumb-${v.id}`} mode="replace" label="Kapak" />
+                      <input name="sortOrder" type="number" defaultValue={v.sortOrder} className={`${inputCls} w-16`} title="Renditja" />
+                    </div>
+                    <div className="flex gap-4">
+                      <button className="btn-outline text-sm">Ruaj</button>
+                      <button formAction={deleteProductVideo} className="text-sm text-brand-red hover:underline">Fshi</button>
+                    </div>
+                  </div>
+                </form>
+              ))}
+              {product.videos.length === 0 && <p className="text-brand-gray text-sm">Asnjë video.</p>}
+            </div>
+
+            <form action={saveProductVideo} className="grid gap-3 rounded-lg border border-dashed border-black/15 p-4 sm:grid-cols-2">
+              <input type="hidden" name="productId" value={product.id} />
+              <input name="title" placeholder="Titulli (opsional)" className={inputCls} />
+              <input id="video-url-new" name="url" placeholder="URL e videos (.mp4)" className={inputCls} required />
+              <input id="video-thumb-new" name="thumbnail" placeholder="URL e fotos (kapak, opsionale)" className={`${inputCls} sm:col-span-2`} />
+              <div className="sm:col-span-2 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <BlobUploader targetId="video-url-new" label="Ngarko video" />
+                  <ImageUploader targetId="video-thumb-new" mode="replace" label="Kapak" />
+                </div>
+                <button className="btn-primary text-sm">+ Shto video</button>
               </div>
             </form>
           </section>

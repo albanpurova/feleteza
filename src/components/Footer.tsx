@@ -44,8 +44,6 @@ export default function Footer() {
           <Link href="/#pse-fleteza" className="hover:text-brand-green">Pse Fletëza?</Link>
           <Link href="/#reviews" className="hover:text-brand-green">Reviews</Link>
           <Link href="/blog" className="hover:text-brand-green">Blog</Link>
-          <Link href="https://qet1mv72z2lm5wy2.public.blob.vercel-storage.com/uploads/Manuali%20_Flete%CC%88za_.pdf" className="hover:text-brand-green" target="_blank">Manuali “Fletëza”</Link>
-          <Link href="https://qet1mv72z2lm5wy2.public.blob.vercel-storage.com/uploads/Manuali%20i%20pe%CC%88rdorimit%20-%20Flete%CC%88zat%20stimuluese%20pe%CC%88r%20bebin%200%2B%20muaj.pdf" className="hover:text-brand-green" target="_blank">Manuali i përdorimit - Fletëzat stimuluese për bebin 0+ muaj</Link>
         </nav>
 
         <div>

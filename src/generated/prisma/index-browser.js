@@ -144,6 +144,11 @@ exports.Prisma.ProductScalarFieldEnum = {
   active: 'active',
   featured: 'featured',
   freeShipping: 'freeShipping',
+  featuresTitle: 'featuresTitle',
+  blocksTitle: 'blocksTitle',
+  highlightTitle: 'highlightTitle',
+  highlightImage: 'highlightImage',
+  highlightPoints: 'highlightPoints',
   sortOrder: 'sortOrder',
   ageRange: 'ageRange',
   createdAt: 'createdAt',
@@ -187,6 +192,24 @@ exports.Prisma.ProductFaqScalarFieldEnum = {
   id: 'id',
   question: 'question',
   answer: 'answer',
+  sortOrder: 'sortOrder',
+  productId: 'productId'
+};
+
+exports.Prisma.ProductBlockScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  body: 'body',
+  imageUrl: 'imageUrl',
+  sortOrder: 'sortOrder',
+  productId: 'productId'
+};
+
+exports.Prisma.ProductVideoScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  title: 'title',
+  thumbnail: 'thumbnail',
   sortOrder: 'sortOrder',
   productId: 'productId'
 };
@@ -316,6 +339,8 @@ exports.Prisma.ModelName = {
   ProductFeature: 'ProductFeature',
   ProductInfoCard: 'ProductInfoCard',
   ProductFaq: 'ProductFaq',
+  ProductBlock: 'ProductBlock',
+  ProductVideo: 'ProductVideo',
   Order: 'Order',
   OrderItem: 'OrderItem',
   BlogPost: 'BlogPost',

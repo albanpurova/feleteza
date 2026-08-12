@@ -4,7 +4,7 @@ import AddToCartControls from "@/components/AddToCartControls";
 import FaqAccordion from "@/components/FaqAccordion";
 import ProductCard from "@/components/ProductCard";
 import Carousel from "@/components/Carousel";
-import ArrowCarousel from "@/components/ArrowCarousel";
+import MediaGallery from "@/components/MediaGallery";
 import { getProductBySlug, getAllProducts, getExperts, getMoments } from "@/lib/queries";
 import { formatEuro } from "@/lib/format";
 
@@ -28,7 +28,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     <div className="bg-white">
       {/* KRYESORE */}
       <div className="container-x grid gap-10 py-12 md:grid-cols-2">
-        <ProductGallery images={product.images} name={product.name} />
+        <ProductGallery images={product.images} videos={product.videos} name={product.name} />
 
         <div>
           <h1 className="font-display text-3xl font-extrabold text-brand-green">{product.name}</h1>
@@ -72,11 +72,18 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       {product.description && (
         <section className="container-x border-t border-black/5 py-12">
           <h2 className="text-center font-display text-2xl font-bold text-brand-green">Përshkrimi i Produktit</h2>
-          <div className="mx-auto mt-6 max-w-3xl space-y-4 text-center text-sm leading-relaxed text-brand-navy-light">
-            {product.description.split("\n\n").map((para, i) => (
-              <p key={i}>{para}</p>
-            ))}
-          </div>
+          {/<[a-z][\s\S]*>/i.test(product.description) ? (
+            <div
+              className="mx-auto mt-6 max-w-3xl text-sm leading-relaxed text-brand-navy-light [&_a]:text-brand-orange [&_a]:underline [&_h2]:mt-6 [&_h2]:font-display [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-brand-navy [&_h3]:mt-4 [&_h3]:font-bold [&_h3]:text-brand-navy [&_img]:my-4 [&_img]:rounded-2xl [&_li]:mt-1 [&_ol]:mt-3 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mt-3 [&_ul]:mt-3 [&_ul]:list-disc [&_ul]:pl-5"
+              dangerouslySetInnerHTML={{ __html: product.description }}
+            />
+          ) : (
+            <div className="mx-auto mt-6 max-w-3xl space-y-4 text-center text-sm leading-relaxed text-brand-navy-light">
+              {product.description.split("\n\n").map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
+            </div>
+          )}
         </section>
       )}
 
@@ -109,7 +116,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         </section>
       )}
 
-{/* SEKSIONI B — FOTO E MADHE + LISTË ME PIKA */}
+      {/* SEKSIONI B — FOTO E MADHE + LISTË ME PIKA */}
       {(product.highlightImage || product.highlightPoints) && (
         <section className="container-x py-12">
           {product.highlightTitle && (
@@ -162,6 +169,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 <div key={f.id} className="flex items-center gap-4">
                   <div
                     className="grid h-28 w-28 shrink-0 place-items-center rounded-2xl p-2 sm:h-32 sm:w-32"
+                    style={{ background: lighten(f.colorTag) }}
                   >
                     {f.imageUrl && (
                       // eslint-disable-next-line @next/next/no-img-element
@@ -196,10 +204,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <div className="mt-10 grid grid-cols-2 gap-5 lg:grid-cols-4">
             {product.infoCards.map((c) => (
               <div key={c.id} className="flex h-full flex-col rounded-2xl border border-black/5 bg-[#f3f4f6] p-4 text-center">
-                {/* <p className="mb-3 text-sm font-semibold text-brand-navy">{c.label}</p> */}
+                <p className="mb-3 text-sm font-semibold text-brand-navy">{c.label}</p>
                 {c.imageUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={c.imageUrl} alt="" className="mx-auto mt-auto w-full object-contain" />
+                  <img src={c.imageUrl} alt="" className="mx-auto mt-auto h-28 w-full object-contain" />
                 ) : (
                   <div className="mx-auto mt-auto h-28 w-full rounded-lg bg-white/70" />
                 )}
@@ -236,17 +244,23 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         <section className="bg-brand-yellow py-12">
           <h2 className="text-center font-display text-2xl font-bold text-brand-navy">Momente të ndara nga prindërit</h2>
           <div className="container-x mt-8">
-            <ArrowCarousel
-              item="basis-[60%] sm:basis-[30%] md:basis-[15.5%]"
-              arrowClass="bg-white/80 shadow hover:bg-white"
-            >
-              {moments.map((m) => (
-                <div key={m.id} className="aspect-[3/5] overflow-hidden rounded-xl bg-white/40">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={m.imageUrl} alt="" className="h-full w-full object-cover" />
-                </div>
-              ))}
-            </ArrowCarousel>
+            <MediaGallery
+              items={moments.map((m) => ({ id: m.id, url: m.imageUrl }))}
+              columns="grid-cols-2 lg:grid-cols-4"
+            />
+          </div>
+        </section>
+      )}
+
+      {/* VIDEO (popup) */}
+      {product.videos.length > 0 && (
+        <section className="container-x py-12">
+          <h2 className="text-center font-display text-2xl font-bold text-brand-green">Video</h2>
+          <div className="mt-8">
+            <MediaGallery
+              items={product.videos.map((v) => ({ id: v.id, url: v.url, poster: v.thumbnail }))}
+              columns="grid-cols-2 lg:grid-cols-4"
+            />
           </div>
         </section>
       )}

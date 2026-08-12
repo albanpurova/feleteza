@@ -238,3 +238,33 @@ export async function deleteProductBlock(formData: FormData) {
   if (id) await prisma.productBlock.delete({ where: { id } });
   revalidatePath("/admin/produktet");
 }
+
+// ============================================================
+//  VIDEO TË PRODUKTIT (ProductVideo)
+// ============================================================
+export async function saveProductVideo(formData: FormData) {
+  await assertAdmin();
+  const id = str(formData, "id");
+  const productId = str(formData, "productId");
+  const data = {
+    url: str(formData, "url"),
+    title: str(formData, "title") || null,
+    thumbnail: str(formData, "thumbnail") || null,
+    sortOrder: int(formData, "sortOrder"),
+  };
+  if (!data.url) return;
+  if (id) {
+    await prisma.productVideo.update({ where: { id }, data });
+    await revalidateProduct((await prisma.productVideo.findUnique({ where: { id }, select: { productId: true } }))!.productId);
+  } else if (productId) {
+    await prisma.productVideo.create({ data: { productId, ...data } });
+    await revalidateProduct(productId);
+  }
+}
+
+export async function deleteProductVideo(formData: FormData) {
+  await assertAdmin();
+  const id = str(formData, "id");
+  if (id) await prisma.productVideo.delete({ where: { id } });
+  revalidatePath("/admin/produktet");
+}
