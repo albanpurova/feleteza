@@ -120,6 +120,22 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* MOMENTE */}
+      {moments.length > 0 && (
+      <section className="bg-brand-yellow py-14">
+        <h2 className="text-center font-display text-2xl font-extrabold text-brand-navy sm:text-3xl">
+          Momente të ndara nga prindërit
+        </h2>
+        <div className="container-x mt-8">
+          <MediaGallery
+            items={moments.map((m) => ({ id: m.id, url: m.imageUrl }))}
+            carousel
+            aspect="aspect-[9/16]"
+          />
+        </div>
+      </section>
+      )}
+
       {/* MISIONI */}
       <section className="bg-brand-red">
         <div className="container-x grid items-center gap-8 py-12 md:grid-cols-2">
@@ -139,21 +155,6 @@ export default async function HomePage() {
 
         </div>
       </section>
-
-      {/* MOMENTE */}
-      {moments.length > 0 && (
-      <section className="bg-brand-yellow py-14">
-        <h2 className="text-center font-display text-2xl font-extrabold text-brand-navy sm:text-3xl">
-          Momente të ndara nga prindërit
-        </h2>
-        <div className="container-x mt-8">
-          <MediaGallery
-            items={moments.map((m) => ({ id: m.id, url: m.imageUrl }))}
-            carousel
-          />
-        </div>
-      </section>
-      )}
 
       {/* BLOG */}
       <section className="container-x py-10">

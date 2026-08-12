@@ -247,13 +247,14 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <MediaGallery
             items={moments.map((m) => ({ id: m.id, url: m.imageUrl }))}
             carousel
+            aspect="aspect-[9/16]"
           />
           </div>
         </section>
       )}
 
       {/* VIDEO (popup) */}
-      {/* product.videos.length > 0 && (
+      {product.videos.length > 0 && (
         <section className="container-x py-12">
           <h2 className="text-center font-display text-2xl font-bold text-brand-green">Video</h2>
           <div className="mt-8">
@@ -263,7 +264,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             />
           </div>
         </section>
-      )*/}
+      )}
 
       {/* FAQ */}
       {product.faqs.length > 0 && (
