@@ -13,6 +13,7 @@ import {
   saveSettings,
 } from "@/app/admin/actions-content";
 import ImageUploader from "@/components/ImageUploader";
+import BlobUploader from "@/components/BlobUploader";
 
 export const dynamic = "force-dynamic";
 
@@ -195,10 +196,13 @@ export default async function AdminContentPage() {
           {d.moments.map((m) => (
             <form key={m.id} action={saveMoment} className="border border-black/5 rounded-lg p-4 space-y-2">
               <input type="hidden" name="id" value={m.id} />
-              <input id={`moment-img-${m.id}`} name="imageUrl" defaultValue={m.imageUrl} placeholder="URL imazhi" className={inputCls} />
+              <input id={`moment-img-${m.id}`} name="imageUrl" defaultValue={m.imageUrl} placeholder="URL imazhi ose video (.mp4)" className={inputCls} />
               <input name="sortOrder" type="number" defaultValue={m.sortOrder} placeholder="Renditja" className={inputCls} />
-              <div className="flex items-center justify-between">
-                <ImageUploader targetId={`moment-img-${m.id}`} mode="replace" />
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <ImageUploader targetId={`moment-img-${m.id}`} mode="replace" label="Ngarko foto" />
+                  <BlobUploader targetId={`moment-img-${m.id}`} label="Ngarko video" />
+                </div>
                 <div className="flex gap-3">
                   <button className="btn-outline text-sm">Ruaj</button>
                   <button formAction={deleteMoment} className="text-sm text-brand-red hover:underline">
@@ -210,8 +214,12 @@ export default async function AdminContentPage() {
           ))}
         </div>
         <AddForm action={saveMoment} title="Shto moment">
-          <input name="imageUrl" placeholder="URL imazhi" className={`${inputCls} sm:col-span-2`} required />
+          <input id="moment-media-new" name="imageUrl" placeholder="URL imazhi ose video (.mp4)" className={`${inputCls} sm:col-span-2`} required />
           <input name="sortOrder" type="number" placeholder="Renditja" className={inputCls} />
+          <div className="sm:col-span-2 flex items-center gap-2">
+            <ImageUploader targetId="moment-media-new" mode="replace" label="Ngarko foto" />
+            <BlobUploader targetId="moment-media-new" label="Ngarko video" />
+          </div>
         </AddForm>
       </Section>
 
