@@ -204,10 +204,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <div className="mt-10 grid grid-cols-2 gap-5 lg:grid-cols-4">
             {product.infoCards.map((c) => (
               <div key={c.id} className="flex h-full flex-col rounded-2xl border border-black/5 bg-[#f3f4f6] p-4 text-center">
-                <p className="mb-3 text-sm font-semibold text-brand-navy">{c.label}</p>
+                {/*<p className="mb-3 text-sm font-semibold text-brand-navy">{c.label}</p>*/}
                 {c.imageUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={c.imageUrl} alt="" className="mx-auto mt-auto h-28 w-full object-contain" />
+                  <img src={c.imageUrl} alt="" className="mx-auto mt-auto w-full object-contain" />
                 ) : (
                   <div className="mx-auto mt-auto h-28 w-full rounded-lg bg-white/70" />
                 )}
