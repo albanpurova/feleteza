@@ -13,7 +13,7 @@ export default function MediaGallery({
   columns = "grid-cols-2 lg:grid-cols-4",
   aspect = "aspect-square",
   carousel = false,
-  itemBasis = "basis-[47%] sm:basis-[31%] lg:basis-[23%]",
+  itemBasis = "basis-[42%] sm:basis-[31%] lg:basis-[23%]",
 }: {
   items: MediaItem[];
   columns?: string;
@@ -97,7 +97,7 @@ export default function MediaGallery({
               type="button"
               onClick={() => scrollByDir(-1)}
               aria-label="Prapa"
-              className="absolute left-0 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-white/80 text-brand-navy shadow transition hover:bg-white sm:-left-3"
+              className="absolute left-0 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-white/80 sm:grid text-brand-navy shadow transition hover:bg-white sm:-left-3"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 18l-6-6 6-6" />
@@ -112,7 +112,7 @@ export default function MediaGallery({
               type="button"
               onClick={() => scrollByDir(1)}
               aria-label="Para"
-              className="absolute right-0 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-white/80 text-brand-navy shadow transition hover:bg-white sm:-right-3"
+              className="absolute right-0 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-white/80 sm:grid text-brand-navy shadow transition hover:bg-white sm:-right-3"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 6l6 6-6 6" />
