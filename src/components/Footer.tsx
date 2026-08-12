@@ -36,7 +36,7 @@ export default function Footer() {
       <div className="container-x grid grid-cols-1 gap-10 py-14 lg:grid-cols-4 lg:gap-8">
 
         {/* Logo / Description */}
-        <div>
+        <div className="w-1/2 mb-10 lg:mb-0 lg:w-auto">
           <Logo />
 
           <p className="mt-4 max-w-xs text-sm text-brand-gray">
@@ -45,7 +45,7 @@ export default function Footer() {
         </div>
 
         {/* Navigation */}
-        <nav className="flex flex-col gap-3 text-sm font-semibold text-brand-navy">
+        <nav className="flex flex-col gap-3 text-sm font-semibold text-brand-navy w-1/2 mb-10 lg:mb-0 lg:w-auto">
           <Link
             href="/produktet"
             className="hover:text-brand-green"
@@ -92,10 +92,10 @@ export default function Footer() {
         </nav>
 
         {/* Contact + Social */}
-        <div className="col-span-1 grid grid-cols-1 gap-10 lg:col-span-2 lg:grid-cols-[3fr_2fr] lg:gap-6">
+        <div className="col-span-1 grid grid-cols-1 gap-10 lg:col-span-2 lg:grid-cols-[3fr_2fr] lg:gap-6 w-full mb-10 lg:mb-0 lg:w-auto">
 
           {/* Contact */}
-          <div>
+          <div className="w-[70%]">
             <h3 className="mb-3 font-bold text-brand-navy">
               Na kontaktoni
             </h3>
@@ -133,7 +133,7 @@ export default function Footer() {
           </div>
 
           {/* Social */}
-          <div>
+          <div className="w-full lg:w-auto">
             <h3 className="mb-3 font-bold text-brand-navy">
               Follow us:
             </h3>
