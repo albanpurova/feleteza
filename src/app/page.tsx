@@ -57,7 +57,7 @@ export default async function HomePage() {
       </section>
 
       {/* PSE FLETËZA */}
-      <section id="pse-fleteza" className="relative overflow-hidden bg-white py-16">
+      <section id="pse-fleteza" className="relative overflow-hidden bg-white pt-16 pb-6 md:pb-16">
         <h2 className="text-center font-display text-3xl font-extrabold text-brand-green">
           Pse FLETËZA?
         </h2>
@@ -89,12 +89,11 @@ export default async function HomePage() {
       </section>
 
       {/* EKSPERTË */}
-      <section className="container-x py-12">
+      <section className="container-x pt-4 pb-12 md:pt-12">
         <h2 className="text-center font-display text-2xl font-extrabold text-brand-navy sm:text-3xl">
           Të konceptuara dhe të zhvilluara nga ekspertë të edukimit të hershëm
         </h2>
-        <div className="mt-10">
-        <Carousel desktop="grid-cols-2 lg:grid-cols-4" item="basis-[45%] sm:basis-[30%]">
+        <div className="mt-8 grid grid-cols-2 gap-5 lg:grid-cols-4">
           {experts.map((e) => (
             <div key={e.id} className="overflow-hidden rounded-2xl border border-black/5 bg-white text-center shadow-sm">
               {e.imageUrl ? (
@@ -106,7 +105,6 @@ export default async function HomePage() {
               <p className="py-3 text-sm font-bold text-brand-navy">{e.label}</p>
             </div>
           ))}
-        </Carousel>
         </div>
       </section>
 

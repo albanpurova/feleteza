@@ -166,9 +166,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 ? []
                 : f.title.split(/,(?![^(]*\))/).map((s) => s.trim()).filter(Boolean);
               return (
-                <div key={f.id} className="flex items-center gap-4">
+                <div key={f.id} className="flex items-center gap-5">
                   <div
-                    className="grid h-28 w-28 shrink-0 place-items-center rounded-2xl p-2 sm:h-32 sm:w-32"
+                    className="grid h-36 w-36 shrink-0 place-items-center rounded-2xl p-2 sm:h-44 sm:w-44"
                     style={{ background: lighten(f.colorTag) }}
                   >
                     {f.imageUrl && (
@@ -176,14 +176,14 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                       <img src={f.imageUrl} alt="" className="h-full w-full rounded-xl object-contain" />
                     )}
                   </div>
-                  <div className="text-sm leading-relaxed text-brand-navy-light">
+                  <div className="text-base leading-relaxed text-brand-navy-light sm:text-lg">
                     {f.body ? (
                       <>
-                        <h3 className="font-bold text-brand-navy">{f.title}</h3>
+                        <h3 className="text-lg font-bold text-brand-navy sm:text-xl">{f.title}</h3>
                         <p className="mt-1 whitespace-pre-line">{f.body}</p>
                       </>
                     ) : (
-                      <ul className="space-y-1">
+                      <ul className="space-y-1.5">
                         {lines.map((line, i) => (
                           <li key={i}>{line}</li>
                         ))}

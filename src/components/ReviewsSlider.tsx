@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 type Review = {
   id: string;
@@ -85,12 +85,25 @@ export default function ReviewsSlider({ reviews }: { reviews: Review[] }) {
   const prev = () => setIndex((i) => (i - 1 + n) % n);
   const next = () => setIndex((i) => (i + 1) % n);
 
+  // Swipe me gisht
+  const touchX = useRef<number | null>(null);
+  function onTouchStart(e: React.TouchEvent) {
+    touchX.current = e.touches[0].clientX;
+  }
+  function onTouchEnd(e: React.TouchEvent) {
+    if (touchX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchX.current;
+    if (dx < -40) next();
+    else if (dx > 40) prev();
+    touchX.current = null;
+  }
+
   const center = at(index);
   const showSides = n >= 3;
   const showRight = n >= 2;
 
   return (
-    <div className="relative px-10 sm:px-14">
+    <div className="relative px-10 sm:px-14" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
       {n > 1 && <Arrow dir="left" onClick={prev} />}
       {n > 1 && <Arrow dir="right" onClick={next} />}
 
