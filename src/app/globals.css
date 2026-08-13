@@ -64,3 +64,8 @@ h1, h2, h3, h4, .font-display {
 /* Fshi shiritin e scroll-it te carousel-et në mobile */
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Faqja është vetëm në modalitet të çelët — pengon dark mode automatik të shfletuesit (Samsung/Chrome) */
+html {
+  color-scheme: light;
+}

@@ -15,6 +15,7 @@ import {
   deleteProductVideo,
 } from "@/app/admin/actions-products";
 import ImageUploader from "@/components/ImageUploader";
+import ImagesField from "@/components/ImagesField";
 import BlobUploader from "@/components/BlobUploader";
 import RichTextEditor from "@/components/RichTextEditor";
 
@@ -189,16 +190,8 @@ export default async function ProductEditPage({
           <RichTextEditor name="description" defaultValue={product?.description ?? ""} />
         </Field>
 
-        <Field label="Imazhet (një URL për rresht)">
-          <textarea
-            id="product-images"
-            name="images"
-            defaultValue={product?.images.map((i) => i.url).join("\n") ?? ""}
-            className={inputCls}
-            rows={4}
-            placeholder="/uploads/foto.jpg"
-          />
-          <ImageUploader targetId="product-images" />
+        <Field label="Imazhet e produktit">
+          <ImagesField name="images" defaultValue={product?.images.map((i) => i.url).join("\n") ?? ""} />
         </Field>
 
         <Field label="Karakteristikat — bullets (një për rresht)">
