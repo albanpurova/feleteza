@@ -22,7 +22,14 @@ export default function FaqAccordion({ faqs }: { faqs: Faq[] }) {
               <span className="text-xl text-brand-orange">{isOpen ? "−" : "+"}</span>
             </button>
             {isOpen && (
-              <p className="mt-3 text-sm leading-relaxed text-brand-orange/90">{f.answer}</p>
+              /<[a-z][\s\S]*>/i.test(f.answer) ? (
+                <div
+                  className="mt-3 text-base leading-relaxed text-brand-navy-light [&_a]:text-brand-orange [&_a]:underline [&_li]:mt-1 [&_ol]:mt-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mt-2 [&_strong]:text-brand-navy [&_ul]:mt-2 [&_ul]:list-disc [&_ul]:pl-5"
+                  dangerouslySetInnerHTML={{ __html: f.answer }}
+                />
+              ) : (
+                <p className="mt-3 text-base leading-relaxed text-brand-navy-light">{f.answer}</p>
+              )
             )}
           </div>
         );

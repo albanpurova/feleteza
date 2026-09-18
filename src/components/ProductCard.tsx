@@ -11,12 +11,15 @@ export type ProductCardData = {
   price: string;
   image: string | null;
   freeShipping?: boolean;
+  stock?: number;
 };
 
 export default function ProductCard({ p }: { p: ProductCardData }) {
   const { addItem } = useCart();
+  const outOfStock = (p.stock ?? 1) <= 0;
 
   function add() {
+    if (outOfStock) return;
     addItem({
       productId: p.productId,
       slug: p.slug,
@@ -43,14 +46,22 @@ export default function ProductCard({ p }: { p: ProductCardData }) {
           )}
         </div>
         <h3 className="mt-3 text-base font-bold text-brand-navy sm:text-lg">{p.name}</h3>
-        <p className="mt-1 text-base font-semibold text-brand-orange">{formatEuro(p.price)}</p>
+        <div className="mt-1 flex items-center gap-2">
+          <p className="text-base font-semibold text-brand-orange">{formatEuro(p.price)}</p>
+          {outOfStock && (
+            <span className="rounded-full bg-brand-red/10 px-2 py-0.5 text-xs font-semibold text-brand-red">
+              S&apos;ka stok
+            </span>
+          )}
+        </div>
       </Link>
 
       <button
         onClick={add}
-        className="btn-primary mt-3 w-full justify-center"
+        disabled={outOfStock}
+        className="btn-primary mt-3 w-full justify-center disabled:cursor-not-allowed disabled:opacity-50"
       >
-        Shto në shportë
+        {outOfStock ? "S'ka stok" : "Shto në shportë"}
       </button>
     </div>
   );

@@ -169,3 +169,33 @@ export async function sendContactEmail(d: {
     ),
   });
 }
+
+export async function sendReviewEmail(d: {
+  authorName: string;
+  email?: string | null;
+  rating: number;
+  text: string;
+  imageUrl?: string | null;
+}) {
+  const transporter = getTransporter();
+  if (!transporter) return;
+  const from = process.env.MAIL_FROM || process.env.SMTP_USER!;
+  const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER!;
+
+  await transporter.sendMail({
+    from,
+    to: adminEmail,
+    replyTo: d.email || undefined,
+    subject: `⭐ Vlerësim i ri nga ${d.authorName} — pret aprovim`,
+    html: baseLayout(
+      "Vlerësim i ri (pret aprovim)",
+      `<p><strong>Emri:</strong> ${d.authorName}</p>
+       <p><strong>Email:</strong> ${d.email || "-"}</p>
+       <p><strong>Yjet:</strong> ${d.rating}/5</p>
+       <p><strong>Komenti:</strong></p>
+       <p style="background:#f4f7f6;padding:12px;border-radius:8px">${d.text}</p>
+       ${d.imageUrl ? `<p><strong>Media:</strong> <a href="${d.imageUrl}">${d.imageUrl}</a></p>` : ""}
+       <p style="margin-top:16px">Hyr te paneli i administrimit → Kontenti → Vlerësimet për ta aprovuar.</p>`
+    ),
+  });
+}

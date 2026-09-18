@@ -13,7 +13,6 @@ import {
   saveSettings,
 } from "@/app/admin/actions-content";
 import ImageUploader from "@/components/ImageUploader";
-import BlobUploader from "@/components/BlobUploader";
 
 export const dynamic = "force-dynamic";
 
@@ -24,7 +23,7 @@ async function loadAll() {
     const [reasons, experts, reviews, moments, faqs, settingsRows] = await Promise.all([
       prisma.homeReason.findMany({ orderBy: { sortOrder: "asc" } }),
       prisma.expertCard.findMany({ orderBy: { sortOrder: "asc" } }),
-      prisma.review.findMany({ orderBy: { sortOrder: "asc" } }),
+      prisma.review.findMany({ orderBy: [{ approved: "asc" }, { sortOrder: "asc" }, { createdAt: "desc" }] }),
       prisma.momentMedia.findMany({ orderBy: { sortOrder: "asc" } }),
       prisma.faq.findMany({ orderBy: { sortOrder: "asc" } }),
       prisma.siteSetting.findMany(),
@@ -159,13 +158,21 @@ export default async function AdminContentPage() {
       <Section title="Vlerësimet (Reviews)">
         <div className="space-y-3">
           {d.reviews.map((rv) => (
-            <form key={rv.id} action={saveReview} className="border border-black/5 rounded-lg p-4 grid sm:grid-cols-2 gap-3">
+            <form key={rv.id} action={saveReview} className={`rounded-lg border p-4 grid sm:grid-cols-2 gap-3 ${rv.approved ? "border-black/5" : "border-brand-orange bg-brand-orange/5"}`}>
               <input type="hidden" name="id" value={rv.id} />
+              {!rv.approved && (
+                <p className="sm:col-span-2 text-sm font-semibold text-brand-orange">⏳ Pret aprovim</p>
+              )}
               <input name="authorName" defaultValue={rv.authorName} placeholder="Emri" className={inputCls} />
               <input name="rating" type="number" min={1} max={5} defaultValue={rv.rating} placeholder="Yjet (1-5)" className={inputCls} />
+              <input name="email" defaultValue={rv.email ?? ""} placeholder="Email (opsional)" className={`${inputCls} sm:col-span-2`} />
               <textarea name="text" defaultValue={rv.text} placeholder="Teksti" className={`${inputCls} sm:col-span-2`} rows={2} />
-              <input id={`review-img-${rv.id}`} name="imageUrl" defaultValue={rv.imageUrl ?? ""} placeholder="URL imazhi" className={inputCls} />
+              <input id={`review-img-${rv.id}`} name="imageUrl" defaultValue={rv.imageUrl ?? ""} placeholder="URL imazhi/video" className={inputCls} />
               <input name="sortOrder" type="number" defaultValue={rv.sortOrder} placeholder="Renditja" className={inputCls} />
+              <label className="sm:col-span-2 flex items-center gap-2 text-sm font-semibold text-brand-navy">
+                <input type="checkbox" name="approved" defaultChecked={rv.approved} className="h-4 w-4" />
+                Aprovuar (shfaqet në faqe)
+              </label>
               <div className="sm:col-span-2 flex items-center justify-between">
                 <ImageUploader targetId={`review-img-${rv.id}`} mode="replace" />
                 <div className="flex gap-3">
@@ -181,9 +188,14 @@ export default async function AdminContentPage() {
         <AddForm action={saveReview} title="Shto vlerësim">
           <input name="authorName" placeholder="Emri" className={inputCls} required />
           <input name="rating" type="number" min={1} max={5} defaultValue={5} placeholder="Yjet" className={inputCls} />
+          <input name="email" placeholder="Email (opsional)" className={`${inputCls} sm:col-span-2`} />
           <textarea name="text" placeholder="Teksti" className={`${inputCls} sm:col-span-2`} rows={2} required />
-          <input id="review-img-new" name="imageUrl" placeholder="URL imazhi" className={inputCls} />
+          <input id="review-img-new" name="imageUrl" placeholder="URL imazhi/video" className={inputCls} />
           <input name="sortOrder" type="number" placeholder="Renditja" className={inputCls} />
+          <label className="sm:col-span-2 flex items-center gap-2 text-sm font-semibold text-brand-navy">
+            <input type="checkbox" name="approved" defaultChecked className="h-4 w-4" />
+            Aprovuar (shfaqet në faqe)
+          </label>
           <div className="sm:col-span-2">
             <ImageUploader targetId="review-img-new" mode="replace" />
           </div>
@@ -196,13 +208,10 @@ export default async function AdminContentPage() {
           {d.moments.map((m) => (
             <form key={m.id} action={saveMoment} className="border border-black/5 rounded-lg p-4 space-y-2">
               <input type="hidden" name="id" value={m.id} />
-              <input id={`moment-img-${m.id}`} name="imageUrl" defaultValue={m.imageUrl} placeholder="URL imazhi ose video (.mp4)" className={inputCls} />
+              <input id={`moment-img-${m.id}`} name="imageUrl" defaultValue={m.imageUrl} placeholder="URL imazhi" className={inputCls} />
               <input name="sortOrder" type="number" defaultValue={m.sortOrder} placeholder="Renditja" className={inputCls} />
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <div className="flex items-center gap-2">
-                  <ImageUploader targetId={`moment-img-${m.id}`} mode="replace" label="Ngarko foto" />
-                  <BlobUploader targetId={`moment-img-${m.id}`} label="Ngarko video" />
-                </div>
+              <div className="flex items-center justify-between">
+                <ImageUploader targetId={`moment-img-${m.id}`} mode="replace" />
                 <div className="flex gap-3">
                   <button className="btn-outline text-sm">Ruaj</button>
                   <button formAction={deleteMoment} className="text-sm text-brand-red hover:underline">
@@ -214,12 +223,8 @@ export default async function AdminContentPage() {
           ))}
         </div>
         <AddForm action={saveMoment} title="Shto moment">
-          <input id="moment-media-new" name="imageUrl" placeholder="URL imazhi ose video (.mp4)" className={`${inputCls} sm:col-span-2`} required />
+          <input name="imageUrl" placeholder="URL imazhi" className={`${inputCls} sm:col-span-2`} required />
           <input name="sortOrder" type="number" placeholder="Renditja" className={inputCls} />
-          <div className="sm:col-span-2 flex items-center gap-2">
-            <ImageUploader targetId="moment-media-new" mode="replace" label="Ngarko foto" />
-            <BlobUploader targetId="moment-media-new" label="Ngarko video" />
-          </div>
         </AddForm>
       </Section>
 

@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import HeroSlider from "@/components/HeroSlider";
 import ReviewsSlider from "@/components/ReviewsSlider";
+import ReviewForm from "@/components/ReviewForm";
 import ProductCard from "@/components/ProductCard";
 import Carousel from "@/components/Carousel";
 import MediaGallery from "@/components/MediaGallery";
@@ -50,7 +51,7 @@ export default async function HomePage() {
           {products.slice(0, 3).map((p) => (
             <ProductCard
               key={p.id}
-              p={{ productId: p.id, slug: p.slug, name: p.name, price: p.price.toString(), image: p.images[0]?.url ?? null, freeShipping: p.freeShipping }}
+              p={{ productId: p.id, slug: p.slug, name: p.name, price: p.price.toString(), image: p.images[0]?.url ?? null, freeShipping: p.freeShipping, stock: p.stock }}
             />
           ))}
         </Carousel>
@@ -116,6 +117,7 @@ export default async function HomePage() {
         <div className="mt-10">
           <ReviewsSlider reviews={reviews.map((r) => ({ id: r.id, authorName: r.authorName, text: r.text, rating: r.rating, imageUrl: r.imageUrl }))} />
         </div>
+        <ReviewForm />
       </section>
 
       {/* MOMENTE */}

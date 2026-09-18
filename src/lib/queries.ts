@@ -71,7 +71,7 @@ export async function getExperts() {
   return safe(() => prisma.expertCard.findMany({ orderBy: { sortOrder: "asc" } }), []);
 }
 export async function getReviews() {
-  return safe(() => prisma.review.findMany({ orderBy: { sortOrder: "asc" } }), []);
+  return safe(() => prisma.review.findMany({ where: { approved: true }, orderBy: { sortOrder: "asc" } }), []);
 }
 export async function getMoments() {
   return safe(() => prisma.momentMedia.findMany({ orderBy: { sortOrder: "asc" } }), []);

@@ -13,7 +13,7 @@ export default async function ProduktetPage() {
         {products.map((p) => (
           <ProductCard
             key={p.id}
-            p={{ productId: p.id, slug: p.slug, name: p.name, price: p.price.toString(), image: p.images[0]?.url ?? null, freeShipping: p.freeShipping }}
+            p={{ productId: p.id, slug: p.slug, name: p.name, price: p.price.toString(), image: p.images[0]?.url ?? null, freeShipping: p.freeShipping, stock: p.stock }}
           />
         ))}
       </div>

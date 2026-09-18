@@ -145,6 +145,8 @@ export async function saveReview(formData: FormData) {
     text: str(formData, "text"),
     rating: int(formData, "rating", 5),
     imageUrl: str(formData, "imageUrl") || null,
+    email: str(formData, "email") || null,
+    approved: formData.get("approved") === "on" || formData.get("approved") === "true",
     sortOrder: int(formData, "sortOrder"),
   };
   if (id) await prisma.review.update({ where: { id }, data });

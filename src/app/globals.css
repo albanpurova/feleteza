@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
 @theme {
+  /* Teksti "sm" të jetë 16px (jo 14px) — pa tekste të vogla */
+  --text-sm: 1rem;
+  --text-sm--line-height: 1.5rem;
   /* Paleta e markës FLETËZA */
   --color-brand-green: #1f9d63;
   --color-brand-green-dark: #178050;

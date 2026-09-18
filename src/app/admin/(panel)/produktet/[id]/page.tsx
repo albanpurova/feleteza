@@ -432,7 +432,7 @@ export default async function ProductEditPage({
                 <form key={q.id} action={saveProductFaq} className="rounded-lg border border-black/10 p-4 space-y-2">
                   <input type="hidden" name="id" value={q.id} />
                   <input name="question" defaultValue={q.question} placeholder="Pyetja" className={inputCls} />
-                  <textarea name="answer" defaultValue={q.answer} placeholder="Përgjigja" className={inputCls} rows={2} />
+                  <RichTextEditor name="answer" defaultValue={q.answer} />
                   <div className="flex items-center justify-between">
                     <input name="sortOrder" type="number" defaultValue={q.sortOrder} className={`${inputCls} w-24`} title="Renditja" />
                     <div className="flex gap-4">
@@ -448,7 +448,7 @@ export default async function ProductEditPage({
             <form action={saveProductFaq} className="space-y-3 rounded-lg border border-dashed border-black/15 p-4">
               <input type="hidden" name="productId" value={product.id} />
               <input name="question" placeholder="Pyetja e re" className={inputCls} required />
-              <textarea name="answer" placeholder="Përgjigja" className={inputCls} rows={3} required />
+              <RichTextEditor name="answer" defaultValue="" />
               <div className="flex justify-end">
                 <button className="btn-primary text-sm">+ Shto pyetje</button>
               </div>

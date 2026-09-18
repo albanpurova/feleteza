@@ -22,13 +22,19 @@ function Stars({ n, size = 16 }: { n: number; size?: number }) {
   );
 }
 
+function isVid(url: string) {
+  return /\.(mp4|webm|ogg|mov|m4v)(\?|$|#)/i.test(url);
+}
+
 function Photo({ url, className }: { url?: string | null; className: string }) {
   return (
     <div className={`overflow-hidden rounded-2xl bg-brand-cream ${className}`}>
-      {url && (
+      {url && (isVid(url) ? (
+        <video src={url} controls playsInline preload="metadata" style={{ accentColor: "#1f9d63" }} className="h-full w-full object-cover" />
+      ) : (
         // eslint-disable-next-line @next/next/no-img-element
         <img src={url} alt="" className="h-full w-full object-cover" />
-      )}
+      ))}
     </div>
   );
 }

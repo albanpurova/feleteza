@@ -234,7 +234,10 @@ model Review {
   text      String
   rating    Int     @default(5)
   imageUrl  String?
+  email     String?
+  approved  Boolean @default(true) // vlerësimet publike krijohen me false; adminët/ekzistueset true
   sortOrder Int     @default(0)
+  createdAt DateTime @default(now())
 }
 
 // "Momente të ndara nga prindërit" — galeria
