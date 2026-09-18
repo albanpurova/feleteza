@@ -205,10 +205,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <div className="mt-10 grid grid-cols-2 gap-5 lg:grid-cols-4">
             {product.infoCards.map((c) => (
               <div key={c.id} className="flex h-full flex-col rounded-2xl border border-black/5 bg-[#f3f4f6] p-4 text-center">
-                <p className="mb-3 text-sm font-semibold text-brand-navy">{c.label}</p>
+                {/*<p className="mb-3 text-sm font-semibold text-brand-navy">{c.label}</p>*/}
                 {c.imageUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={c.imageUrl} alt="" className="mx-auto mt-auto h-28 w-full object-contain" />
+                  <img src={c.imageUrl} alt="" className="mx-auto mt-auto w-full object-contain" />
                 ) : (
                   <div className="mx-auto mt-auto h-28 w-full rounded-lg bg-white/70" />
                 )}
@@ -255,7 +255,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       )}
 
       {/* VIDEO (popup) */}
-      {product.videos.length > 0 && (
+      {/* product.videos.length > 0 && (
         <section className="container-x py-12">
           <h2 className="text-center font-display text-2xl font-bold text-brand-green">Video</h2>
           <div className="mt-8">
@@ -265,7 +265,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             />
           </div>
         </section>
-      )}
+      ) */}
 
       {/* FAQ */}
       {product.faqs.length > 0 && (
